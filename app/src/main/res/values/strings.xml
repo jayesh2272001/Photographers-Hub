@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Final year project</string>
+    <!--    <string name="default_web_client_id" translatable="false">590781710467-l44n0tuiqi2lnqet5uj300t5945pdvp1.apps.googleusercontent.com</string>-->
+    <string name="forgot_password">Forgot password?</string>
+    <string name="main_name">Gratitude</string>
+    <string name="sign_up_with_email_id">Sign Up with Email ID</string>
+    <string name="already_have_an_account_sign_in">Already have an account? Sign In</string>
+    <string name="please_fill_the_information_to_sign_up">Please fill the information to Sign Up</string>
+    <string name="create_new_account">Create New Account</string>
+    <string name="full_name">Full Name</string>
+    <string name="email_address">Email Address</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="have_an_account_sign_in">Have an account? Sign In</string>
+    <string name="sign_in">Sign In</string>
+    <string name="don_t_have_an_account_sign_up">Don\'t have an account? Sign Up</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="gratitude">Gratitude</string>
+    <string name="about01">Terrorism Is The Big Fear That Every Country Faces, Our Soldiers Give Their Best To Fight Against It And Give Us Safe Life. We Know That The Lives Of Our Soldiers Are So Precious.To Show Some Gratitude Towards Them We Are Trying To Make An Application Named Gratitude Which Will Include will help them to manage their data like:</string>
+    <string name="about02">1. Post Wise data of soldiers.</string>
+    <string name="about03">2.Family information and contacts</string>
+    <string name="about04">3.training academy\'s data</string>
+    <string name="about05">4.data of trainers and trainees</string>
+    <string name="about06">5.hostel</string>
+    <string name="about07">6.Canteen Or Mess</string>
+    <string name="about08">7.Medical Assistance</string>
+</resources>
