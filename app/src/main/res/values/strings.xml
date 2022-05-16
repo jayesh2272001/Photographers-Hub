@@ -1,5 +1,5 @@
-<resources>
-    <string name="app_name">Final year project</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">Photographers Hub</string>
     <!--    <string name="default_web_client_id" translatable="false">590781710467-l44n0tuiqi2lnqet5uj300t5945pdvp1.apps.googleusercontent.com</string>-->
     <string name="forgot_password">Forgot password?</string>
     <string name="main_name">Gratitude</string>
@@ -9,7 +9,7 @@
     <string name="create_new_account">Create New Account</string>
     <string name="full_name">Full Name</string>
     <string name="email_address">Email Address</string>
-    <string name="phone_number">Phone Number</string>
+    <string name="phone_number">Mobile Number</string>
     <string name="password">Password</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="sign_up">Sign Up</string>
@@ -27,4 +27,10 @@
     <string name="about06">5.hostel</string>
     <string name="about07">6.Canteen Or Mess</string>
     <string name="about08">7.Medical Assistance</string>
+
+    <string name="close_drawer" tools:ignore="PrivateResource">Close Drawer</string>
+    <string name="open_drawer">Open Drawer</string>
+
+    <string name="dialog_title">Confirm Mobile Number</string>
+
 </resources>

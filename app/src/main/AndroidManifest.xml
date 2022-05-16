@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.jayesh.finalyearproject">
+    <!-- Permission for app -->
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -9,6 +11,15 @@
         android:roundIcon="@drawable/ic_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.FinalYearProject">
+        <activity
+            android:name=".activity.PhotographersDescActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.GetProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.OtpVerifyActivity"
+            android:exported="false" />
         <activity
             android:name=".activity.SignInActivity"
             android:exported="false" />

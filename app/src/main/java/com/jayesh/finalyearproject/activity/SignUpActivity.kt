@@ -26,7 +26,6 @@ import com.jayesh.finalyearproject.data.User
 
 
 class SignUpActivity : AppCompatActivity() {
-    lateinit var savedData: SavedData
     lateinit var mtbMain: MaterialToolbar
     lateinit var tvHaveAccount: TextView
     lateinit var etName: TextInputEditText
@@ -39,13 +38,6 @@ class SignUpActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
-        //checking saved data when app is loading and setting theme
-        savedData = SavedData(this)
-        if (savedData.loadDarkModeState() == true) {
-            setTheme(R.style.Dark_FinalYearProject)
-        } else {
-            setTheme(R.style.Theme_FinalYearProject)
-        }
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
@@ -112,13 +104,13 @@ class SignUpActivity : AppCompatActivity() {
             val email: String = etEmail.text.toString()
             val password: String = etCPass.text.toString()
             val phone: String = etMono.text.toString()
-            registerUser(name, email, password, phone)
+//            registerUser(name, email, password, phone)
         }
 
     }
 
 
-    private fun registerUser(name: String, email: String, password: String, phone: String) {
+    /*private fun registerUser(name: String, email: String, password: String, phone: String) {
 
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(OnCompleteListener<AuthResult?> { task ->
@@ -126,8 +118,7 @@ class SignUpActivity : AppCompatActivity() {
                     val user = User(
                         name,
                         email,
-                        phone
-                    )
+                        phone)
                     FirebaseDatabase.getInstance().getReference("Users")
                         .child(FirebaseAuth.getInstance().currentUser!!.uid)
                         .setValue(user).addOnCompleteListener(OnCompleteListener<Void?> { task ->
@@ -142,6 +133,6 @@ class SignUpActivity : AppCompatActivity() {
 
                 }
             })
-    }
+    }*/
 
 }
