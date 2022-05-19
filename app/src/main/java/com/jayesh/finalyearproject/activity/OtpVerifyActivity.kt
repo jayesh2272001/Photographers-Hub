@@ -3,7 +3,6 @@ package com.jayesh.finalyearproject.activity
 * date: 03 may
 * owner: jayesh Shinde */
 
-import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -24,12 +23,8 @@ import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.auth.PhoneAuthProvider.ForceResendingToken
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
-import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.jayesh.finalyearproject.R
 import java.util.concurrent.TimeUnit
@@ -103,7 +98,7 @@ class OtpVerifyActivity : AppCompatActivity() {
                     // [START read_message]
                     myRef.child(auth.currentUser?.uid!!).get()
                         .addOnSuccessListener {
-                            Log.i("firebase", "Got value ${it.value}")
+                            Log.i("firebase", "Got value in otpverifyactivity ${it.value}")
                             //intent user towards the main activity
                             if (it.value != null) {
                                 Toast.makeText(this, "login successfully", Toast.LENGTH_SHORT)
@@ -112,7 +107,9 @@ class OtpVerifyActivity : AppCompatActivity() {
                                 finish()
                             } else {
                                 Log.e("firebase", "Error getting data")
-                                startActivity(Intent(this, GetProfileActivity::class.java))
+                                val intent = Intent(this, GetProfileActivity()::class.java)
+                                intent.putExtra("mono", auth.currentUser!!.phoneNumber.toString())
+                                startActivity(intent)
                                 finish()
                             }
                         }.addOnFailureListener {

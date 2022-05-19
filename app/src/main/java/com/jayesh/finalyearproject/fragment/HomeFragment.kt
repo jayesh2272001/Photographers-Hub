@@ -3,8 +3,11 @@ package com.jayesh.finalyearproject.fragment
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.ProgressBar
+import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.compose.animation.core.snap
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,6 +24,8 @@ class HomeFragment : Fragment() {
     lateinit var rvMain: RecyclerView
     lateinit var dbref: DatabaseReference
     lateinit var usersArrayList: ArrayList<User>
+    lateinit var rlProgressBar: RelativeLayout
+    lateinit var progressBar: ProgressBar
 
     private lateinit var auth: FirebaseAuth
 
@@ -33,9 +38,11 @@ class HomeFragment : Fragment() {
         setHasOptionsMenu(true)
         val view = inflater.inflate(R.layout.fragment_home, container, false)
         rvMain = view.findViewById(R.id.rvMain)
+        rlProgressBar = view.findViewById(R.id.rlProgressBar)
         rvMain.layoutManager = LinearLayoutManager(activity)
         rvMain.setHasFixedSize(true)
 
+        rlProgressBar.visibility = View.VISIBLE
         usersArrayList = arrayListOf<User>()
         getUserData()
 
@@ -44,18 +51,14 @@ class HomeFragment : Fragment() {
 
     private fun getUserData() {
         dbref = FirebaseDatabase.getInstance().getReference("users")
-
         dbref.addValueEventListener(object : ValueEventListener {
-
             override fun onDataChange(snapshot: DataSnapshot) {
                 Log.i("firebase reset", "Got value ${snapshot}")
-
                 if (snapshot.exists()) {
-
                     for (userSnapshot in snapshot.children) {
-                     /*   if (snapshot.child("users").equals(auth.currentUser?.uid)){
-                            continue
-                        }*/
+                        /*   if (snapshot.child("users").equals(auth.currentUser?.uid)){
+                               continue
+                           }*/
 
                         val user = userSnapshot.getValue(User::class.java)
                         usersArrayList.add(user!!)
@@ -63,6 +66,7 @@ class HomeFragment : Fragment() {
                     }
 
                     rvMain.adapter = FetchUserAdapter(requireContext(), usersArrayList)
+                    rlProgressBar.visibility = View.GONE
                 }
             }
 

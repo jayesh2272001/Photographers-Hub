@@ -2,6 +2,7 @@ package com.jayesh.finalyearproject.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,9 +50,12 @@ class FetchUserAdapter(val context: Context, val usersList: ArrayList<User>) :
         //holder.txtPPost.text = user.postTitle
         holder.txtPExperience.text = user.experience + " years experience overall"
         holder.txtPLocation.text = user.location
-        //holder.txtPFees.text = user.fees
+        holder.txtPFees.text = user.uid
+        var currUser = user.uid
         holder.cvUser.setOnClickListener {
-            val intent=Intent(context,PhotographersDescActivity::class.java)
+            val intent = Intent(context, PhotographersDescActivity::class.java)
+            Log.i("User", "Got current user $currUser")
+            intent.putExtra("userVal",currUser)
             context.startActivity(intent)
             Toast.makeText(context, "click", Toast.LENGTH_SHORT).show()
         }

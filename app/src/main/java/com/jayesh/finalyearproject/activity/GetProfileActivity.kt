@@ -8,7 +8,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -20,7 +19,7 @@ import com.jayesh.finalyearproject.data.User
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.*
 
-class GetProfileActivity : AppCompatActivity() {
+class GetProfileActivity() : AppCompatActivity() {
     private lateinit var database: DatabaseReference
     private lateinit var auth: FirebaseAuth
     private lateinit var storage: FirebaseStorage
@@ -34,6 +33,7 @@ class GetProfileActivity : AppCompatActivity() {
     lateinit var circleImageView: CircleImageView
     lateinit var selectedImage: Uri
     private lateinit var dialog: AlertDialog.Builder
+    lateinit var mono: String
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,6 +51,7 @@ class GetProfileActivity : AppCompatActivity() {
         etLocation = findViewById(R.id.etLocation)
         btnSubmit = findViewById(R.id.btnSubmit)
         circleImageView = findViewById(R.id.civProfileImage)
+        mono = intent.getStringExtra("mono").toString()
 
 
         dialog = AlertDialog.Builder(this)
@@ -67,20 +68,21 @@ class GetProfileActivity : AppCompatActivity() {
 //        var ref = databaseReference.reference.child("profile")
 
         btnSubmit.setOnClickListener {
-            if (circleImageView == null) {
-                Toast.makeText(this, "please select profile image", Toast.LENGTH_SHORT).show()
-            }
             val reference = storage.reference.child(Date().time.toString())
             reference.putFile(selectedImage).addOnCompleteListener() {
                 if (it.isSuccessful) {
                     reference.downloadUrl.addOnSuccessListener { task ->
                         WriteNewProfile(
+
                             etName.text.toString(),
                             etEmail.text.toString(),
                             etAge.text.toString(),
                             etExperience.text.toString(),
                             etLocation.text.toString(),
-                            task.toString()
+                            task.toString(),
+                            auth.currentUser?.uid.toString(),
+                            mono
+
                         )
                     }
                 }
@@ -106,10 +108,12 @@ class GetProfileActivity : AppCompatActivity() {
         age: String,
         experience: String,
         location: String,
-        profileImage: String
+        profileImage: String,
+        uid: String,
+        mono: String
 
     ) {
-        val user = User(name, email, age, experience, location, profileImage)
+        val user = User(name, email, age, experience, location, profileImage, uid, mono)
         database.child("users").child(auth.currentUser?.uid!!).setValue(user)
             .addOnSuccessListener {
                 Toast.makeText(this, "Profile created successful", Toast.LENGTH_SHORT).show()

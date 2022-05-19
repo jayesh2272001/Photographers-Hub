@@ -2,10 +2,13 @@ package com.jayesh.finalyearproject.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
+import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import android.view.WindowManager
 import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
@@ -13,12 +16,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
 import com.jayesh.finalyearproject.R
+import com.jayesh.finalyearproject.data.User
 import com.jayesh.finalyearproject.fragment.HomeFragment
 import com.jayesh.finalyearproject.fragment.SettingFragment
+import de.hdodenhof.circleimageview.CircleImageView
 
 
 class MainActivity : AppCompatActivity() {
@@ -29,6 +37,13 @@ class MainActivity : AppCompatActivity() {
     lateinit var drawerLayout: DrawerLayout
     lateinit var navMain: NavigationView
     var previousMenuItemSelected: MenuItem? = null
+
+    lateinit var tvEditProfile: TextView
+    lateinit var tvLocation: TextView
+    lateinit var tvUserName: TextView
+    lateinit var profileImage: CircleImageView
+    lateinit var dbref: DatabaseReference
+    private lateinit var auth: FirebaseAuth
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,9 +56,19 @@ class MainActivity : AppCompatActivity() {
         frameLayout = findViewById(R.id.frameLayout)
         drawerLayout = findViewById(R.id.drawerLayout)
         navMain = findViewById(R.id.navMain)
+        auth = FirebaseAuth.getInstance()
+
+        val headerView: View = navMain.getHeaderView(0)
+        tvUserName = headerView.findViewById(R.id.tvUserName)
+        tvLocation = headerView.findViewById(R.id.tvLocation)
+        tvEditProfile = headerView.findViewById(R.id.tvEditProfile)
+        profileImage = headerView.findViewById(R.id.ivLogo)
+
+
 
         navMain.menu.getItem(0).isCheckable = true
         navMain.menu.getItem(0).isChecked = true
+
 
         setUpToolBar(tbMain)
         val actionBarDrawerToggle = ActionBarDrawerToggle(
@@ -105,6 +130,7 @@ class MainActivity : AppCompatActivity() {
 
         defaultFragment()
 
+        setProfileInfo(navMain)
     }
 
     private fun defaultFragment() {
@@ -152,6 +178,27 @@ class MainActivity : AppCompatActivity() {
         finish()
     }
 
+    private fun setProfileInfo(navMain: NavigationView) {
+        dbref = FirebaseDatabase.getInstance().getReference("users")
+            .child(auth.currentUser?.uid.toString())
+        dbref.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    Log.i("firebase reset", "Got Current user ${snapshot}")
+                    val user = snapshot.getValue(User::class.java)
+                    tvUserName.text = user?.name?.uppercase()
+                    tvLocation.text = user?.location
+                    Glide.with(this@MainActivity).load(user?.profileImage)
+                        .into(profileImage).view
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
 
 
 }
