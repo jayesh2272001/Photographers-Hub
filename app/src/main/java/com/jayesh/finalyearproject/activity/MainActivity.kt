@@ -7,7 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
 import android.widget.FrameLayout
-import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var tvLocation: TextView
     lateinit var tvUserName: TextView
     lateinit var profileImage: CircleImageView
+    lateinit var navHeader: RelativeLayout
     lateinit var dbref: DatabaseReference
     private lateinit var auth: FirebaseAuth
 
@@ -50,21 +51,22 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
         coordinatorLayout = findViewById(R.id.coordinatorLayout)
         tbMain = findViewById(R.id.tbMain)
         frameLayout = findViewById(R.id.frameLayout)
         drawerLayout = findViewById(R.id.drawerLayout)
         navMain = findViewById(R.id.navMain)
         auth = FirebaseAuth.getInstance()
-
         val headerView: View = navMain.getHeaderView(0)
         tvUserName = headerView.findViewById(R.id.tvUserName)
         tvLocation = headerView.findViewById(R.id.tvLocation)
         tvEditProfile = headerView.findViewById(R.id.tvEditProfile)
         profileImage = headerView.findViewById(R.id.ivLogo)
+        navHeader = headerView.findViewById(R.id.navHeader)
 
-
+        navHeader.setOnClickListener {
+            startActivity(Intent(this, CurrentUserProfileActivity::class.java))
+        }
 
         navMain.menu.getItem(0).isCheckable = true
         navMain.menu.getItem(0).isChecked = true

@@ -52,10 +52,11 @@ class FetchUserAdapter(val context: Context, val usersList: ArrayList<User>) :
         holder.txtPLocation.text = user.location
         holder.txtPFees.text = user.uid
         var currUser = user.uid
+
         holder.cvUser.setOnClickListener {
             val intent = Intent(context, PhotographersDescActivity::class.java)
             Log.i("User", "Got current user $currUser")
-            intent.putExtra("userVal",currUser)
+            intent.putExtra("userVal", currUser)
             context.startActivity(intent)
             Toast.makeText(context, "click", Toast.LENGTH_SHORT).show()
         }

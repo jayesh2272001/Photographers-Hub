@@ -1,47 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/navHeader"
     android:layout_width="match_parent"
-    android:layout_height="200dp">
+    android:layout_height="wrap_content">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ivLogo"
-        android:layout_gravity="center"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
         android:src="@color/yellow" />
 
     <TextView
         android:id="@+id/tvUserName"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ivLogo"
-        android:gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@+id/ivLogo"
         android:text="Name of user"
         android:textAppearance="@style/MaterialAlertDialog.Material3"
-        android:textSize="14sp"
+        android:textSize="18sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvLocation"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tvUserName"
+        android:layout_below="@+id/tvUserName"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/ivLogo"
         android:gravity="center_horizontal"
         android:text="Location"
         android:textSize="12sp" />
 
+
     <TextView
         android:id="@+id/tvEditProfile"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tvLocation"
-        android:gravity="center"
-        android:text="Edit your profile"
-        android:textAppearance="@style/MaterialAlertDialog.Material3"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/ivLogo"
+        android:text="View and edit profile"
         android:textColor="@color/yellow"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        android:textSize="14sp" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/ivLogo"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:alpha="0.8"
+        android:background="@color/yellow" />
 </RelativeLayout>

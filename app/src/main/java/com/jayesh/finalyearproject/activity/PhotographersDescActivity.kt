@@ -34,13 +34,13 @@ class PhotographersDescActivity : AppCompatActivity() {
     lateinit var dbref: DatabaseReference
     private lateinit var auth: FirebaseAuth
     lateinit var usersArrayList: ArrayList<User>
-
+    var photographerName: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_photographers_desc)
         //extracting extra from FetchUserAdapter
-        var userForCheck = intent.getStringExtra("userVal")
+        val userForCheck = intent.getStringExtra("userVal")
 
         rlProgressBar = findViewById(R.id.rlProgressBar)
         progressBar = findViewById(R.id.progressBar)
@@ -59,12 +59,17 @@ class PhotographersDescActivity : AppCompatActivity() {
         usersArrayList = arrayListOf<User>()
         getUserData(userForCheck.toString())
 
+        //calling photographer
         fabCallUser.setOnClickListener {
             val u = Uri.parse("tel:" + usersArrayList[0].mono)
             val i = Intent(Intent.ACTION_DIAL, u)
             startActivity(i)
         }
 
+        //booking photographer
+        btnBookNow.setOnClickListener {
+            bookPhotographerWithId(userForCheck, photographerName)
+        }
     }
 
     private fun getUserData(userForCheck: String) {
@@ -76,10 +81,11 @@ class PhotographersDescActivity : AppCompatActivity() {
 
                     val user = snapshot.getValue(User::class.java)
                     usersArrayList.add(user!!)
-                    tvUserName.text = user?.name
-                    tvUserAddress.text = user?.location
-                    tvUserEmail.text = user?.email
-                    Glide.with(this@PhotographersDescActivity).load(user?.profileImage)
+                    tvUserName.text = user.name
+                    photographerName = user.name
+                    tvUserAddress.text = user.location
+                    tvUserEmail.text = user.email
+                    Glide.with(this@PhotographersDescActivity).load(user.profileImage)
                         .into(civProfileImage).view
                     //Toast.makeText(activity, "$snapshot", Toast.LENGTH_SHORT).show()
 
@@ -95,4 +101,7 @@ class PhotographersDescActivity : AppCompatActivity() {
         })
     }
 
+    private fun bookPhotographerWithId(photographersId: String?, photographersName: String?) {
+        Toast.makeText(this, "$photographersName is hired ", Toast.LENGTH_SHORT).show()
+    }
 }

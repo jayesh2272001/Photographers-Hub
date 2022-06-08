@@ -1,5 +1,6 @@
 package com.jayesh.finalyearproject.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.jayesh.finalyearproject.R
+import com.jayesh.finalyearproject.activity.MainActivity
 import com.jayesh.finalyearproject.adapter.FetchUserAdapter
 import com.jayesh.finalyearproject.data.User
 import com.jayesh.finalyearproject.model.Users
@@ -23,6 +25,7 @@ import java.util.ArrayList
 class HomeFragment : Fragment() {
     lateinit var rvMain: RecyclerView
     lateinit var dbref: DatabaseReference
+    lateinit var dbref1: DatabaseReference
     lateinit var usersArrayList: ArrayList<User>
     lateinit var rlProgressBar: RelativeLayout
     lateinit var progressBar: ProgressBar
@@ -41,6 +44,8 @@ class HomeFragment : Fragment() {
         rlProgressBar = view.findViewById(R.id.rlProgressBar)
         rvMain.layoutManager = LinearLayoutManager(activity)
         rvMain.setHasFixedSize(true)
+        auth = FirebaseAuth.getInstance()
+
 
         rlProgressBar.visibility = View.VISIBLE
         usersArrayList = arrayListOf<User>()
@@ -51,18 +56,37 @@ class HomeFragment : Fragment() {
 
     private fun getUserData() {
         dbref = FirebaseDatabase.getInstance().getReference("users")
+
+        /*getting the snapshot of current user
+        start*/
+        var exist: DataSnapshot? = null
+        dbref1 = FirebaseDatabase.getInstance().getReference("users")
+            .child(auth.currentUser?.uid.toString())
+        dbref1.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    exist = snapshot
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+        /*ends*/
+
         dbref.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                Log.i("firebase reset", "Got value ${snapshot}")
                 if (snapshot.exists()) {
                     for (userSnapshot in snapshot.children) {
-                        /*   if (snapshot.child("users").equals(auth.currentUser?.uid)){
-                               continue
-                           }*/
+
+                        /*reason: to skip current user from users list*/
+                        if (userSnapshot.key == exist?.key) {
+                            continue
+                        }
 
                         val user = userSnapshot.getValue(User::class.java)
                         usersArrayList.add(user!!)
-//                        Toast.makeText(activity, "$snapshot", Toast.LENGTH_SHORT).show()
                     }
 
                     rvMain.adapter = FetchUserAdapter(requireContext(), usersArrayList)
@@ -92,6 +116,7 @@ class HomeFragment : Fragment() {
         }
         return super.onOptionsItemSelected(item)
     }
+
 
 
 }
