@@ -24,6 +24,7 @@ import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
 import com.jayesh.finalyearproject.R
 import com.jayesh.finalyearproject.data.User
+import com.jayesh.finalyearproject.fragment.BookmarkFragment
 import com.jayesh.finalyearproject.fragment.HomeFragment
 import com.jayesh.finalyearproject.fragment.SettingFragment
 import de.hdodenhof.circleimageview.CircleImageView
@@ -97,8 +98,10 @@ class MainActivity : AppCompatActivity() {
                     drawerLayout.closeDrawers()
                 }
 
-                R.id.itmUsers -> {
-                    Toast.makeText(this, "Users", Toast.LENGTH_SHORT).show()
+                R.id.itmBookmark -> {
+                    supportFragmentManager.beginTransaction().replace(
+                        R.id.frameLayout, BookmarkFragment()
+                    ).commit()
                     drawerLayout.closeDrawers()
                 }
 

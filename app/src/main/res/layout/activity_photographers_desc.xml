@@ -7,9 +7,11 @@
     android:orientation="vertical"
     tools:context=".activity.PhotographersDescActivity">
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+
         android:orientation="vertical">
         <!--progress bar-->
         <RelativeLayout
@@ -37,7 +39,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="30dp"
+
             android:orientation="vertical">
 
 
@@ -105,7 +107,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"
                     android:backgroundTint="@color/yellow"
-                    android:src="@drawable/ic_not_bookmarked"
+
                     app:elevation="5dp" />
             </LinearLayout>
 
@@ -142,10 +144,10 @@
         android:id="@+id/btnBookNow"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
         android:text="Book Now"
-        android:layout_alignParentBottom="true"
         android:textColor="@color/white" />
 </RelativeLayout>

@@ -13,6 +13,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FinalYearProject">
         <activity
+            android:name=".activity.ChatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.GetRecentWorkActivity"
+            android:exported="false"></activity>
+        <activity
             android:name=".activity.CurrentUserProfileActivity"
             android:exported="false" />
         <activity

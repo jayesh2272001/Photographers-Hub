@@ -1,5 +1,6 @@
 package com.jayesh.finalyearproject.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.util.Log
@@ -30,7 +31,6 @@ class FetchUserAdapter(val context: Context, val usersList: ArrayList<User>) :
         val civProfileImage: CircleImageView = view.findViewById(R.id.civProfileImage)
         val txtPPost: TextView = view.findViewById(R.id.txtPPost)
         val txtPFees: TextView = view.findViewById(R.id.txtPFees)
-
         //val btnBookPhotographer: Button = view.findViewById(R.id.btnBookPhotographer)
         val txtPLocation: TextView = view.findViewById(R.id.txtPLocation)
         val txtPName: TextView = view.findViewById(R.id.txtPName)
@@ -42,6 +42,7 @@ class FetchUserAdapter(val context: Context, val usersList: ArrayList<User>) :
         return UserViewHolder(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         val user = usersList[position]
         holder.txtPName.text =
@@ -51,14 +52,15 @@ class FetchUserAdapter(val context: Context, val usersList: ArrayList<User>) :
         holder.txtPExperience.text = user.experience + " years experience overall"
         holder.txtPLocation.text = user.location
         holder.txtPFees.text = user.uid
-        var currUser = user.uid
+        val currUser = user.uid
+        val currName = user.name
 
         holder.cvUser.setOnClickListener {
             val intent = Intent(context, PhotographersDescActivity::class.java)
             Log.i("User", "Got current user $currUser")
             intent.putExtra("userVal", currUser)
+            intent.putExtra("userName",currName)
             context.startActivity(intent)
-            Toast.makeText(context, "click", Toast.LENGTH_SHORT).show()
         }
     }
 

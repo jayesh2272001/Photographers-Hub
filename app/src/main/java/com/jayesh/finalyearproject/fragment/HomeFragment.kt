@@ -1,5 +1,6 @@
 package com.jayesh.finalyearproject.fragment
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -29,6 +30,7 @@ class HomeFragment : Fragment() {
     lateinit var usersArrayList: ArrayList<User>
     lateinit var rlProgressBar: RelativeLayout
     lateinit var progressBar: ProgressBar
+    lateinit var homeAdapter: FetchUserAdapter
 
     private lateinit var auth: FirebaseAuth
 
@@ -79,7 +81,6 @@ class HomeFragment : Fragment() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     for (userSnapshot in snapshot.children) {
-
                         /*reason: to skip current user from users list*/
                         if (userSnapshot.key == exist?.key) {
                             continue
@@ -88,8 +89,10 @@ class HomeFragment : Fragment() {
                         val user = userSnapshot.getValue(User::class.java)
                         usersArrayList.add(user!!)
                     }
+                    //homeAdapter.notifyDataSetChanged()
 
-                    rvMain.adapter = FetchUserAdapter(requireContext(), usersArrayList)
+                    homeAdapter = FetchUserAdapter(activity!!, usersArrayList)
+                    rvMain.adapter = homeAdapter
                     rlProgressBar.visibility = View.GONE
                 }
             }
@@ -116,7 +119,6 @@ class HomeFragment : Fragment() {
         }
         return super.onOptionsItemSelected(item)
     }
-
 
 
 }

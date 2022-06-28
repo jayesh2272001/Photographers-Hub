@@ -1,5 +1,7 @@
 package com.jayesh.finalyearproject.data;
 
+import java.util.HashMap;
+
 public class User {
     public String name, email, age, experience, location, profileImage, uid, mono;
 
@@ -7,7 +9,8 @@ public class User {
 
     }
 
-    public User(String name, String email, String age, String experience, String location, String profileImage, String uid, String mono) {
+    public User(String name, String email, String age, String experience, String location,
+                String profileImage, String uid, String mono) {
         this.age = age;
         this.email = email;
         this.experience = experience;

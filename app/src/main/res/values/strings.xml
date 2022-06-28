@@ -32,5 +32,9 @@
     <string name="open_drawer">Open Drawer</string>
 
     <string name="dialog_title">Confirm Mobile Number</string>
+    <string name="recent_work">Select your recent work</string>
+    <string name="skip">Skip</string>
+    <string name="enter_message_CA">Enter a message</string>
+    <string name="profile_name">Profile Name</string>
 
 </resources>

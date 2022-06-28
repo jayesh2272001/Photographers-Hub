@@ -2,12 +2,11 @@ package com.jayesh.finalyearproject.activity
 
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
+import android.view.View
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -16,10 +15,13 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.jayesh.finalyearproject.R
 import com.jayesh.finalyearproject.data.User
+import com.jayesh.finalyearproject.fragment.HomeFragment
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.*
 
+
 class GetProfileActivity() : AppCompatActivity() {
+
     private lateinit var database: DatabaseReference
     private lateinit var auth: FirebaseAuth
     private lateinit var storage: FirebaseStorage
@@ -30,9 +32,10 @@ class GetProfileActivity() : AppCompatActivity() {
     lateinit var etExperience: EditText
     lateinit var etLocation: EditText
     lateinit var btnSubmit: Button
+    lateinit var rlProgressBar: RelativeLayout
+    lateinit var progressBar: ProgressBar
     lateinit var circleImageView: CircleImageView
     lateinit var selectedImage: Uri
-    private lateinit var dialog: AlertDialog.Builder
     lateinit var mono: String
 
 
@@ -49,14 +52,11 @@ class GetProfileActivity() : AppCompatActivity() {
         etAge = findViewById(R.id.etAge)
         etExperience = findViewById(R.id.etExperience)
         etLocation = findViewById(R.id.etLocation)
+        progressBar = findViewById(R.id.progressBar)
+        rlProgressBar = findViewById(R.id.rlProgressBar)
         btnSubmit = findViewById(R.id.btnSubmit)
         circleImageView = findViewById(R.id.civProfileImage)
         mono = intent.getStringExtra("mono").toString()
-
-
-        dialog = AlertDialog.Builder(this)
-            .setMessage("updating profile...")
-            .setCancelable(false)
 
 
         circleImageView.setOnClickListener {
@@ -65,15 +65,14 @@ class GetProfileActivity() : AppCompatActivity() {
             intent.type = "image/*"
             startActivityForResult(intent, 1)
         }
-//        var ref = databaseReference.reference.child("profile")
 
         btnSubmit.setOnClickListener {
+            rlProgressBar.visibility = View.VISIBLE
             val reference = storage.reference.child(Date().time.toString())
-            reference.putFile(selectedImage).addOnCompleteListener() {
+            reference.putFile(selectedImage).addOnCompleteListener {
                 if (it.isSuccessful) {
                     reference.downloadUrl.addOnSuccessListener { task ->
-                        WriteNewProfile(
-
+                        writeNewProfile(
                             etName.text.toString(),
                             etEmail.text.toString(),
                             etAge.text.toString(),
@@ -82,7 +81,6 @@ class GetProfileActivity() : AppCompatActivity() {
                             task.toString(),
                             auth.currentUser?.uid.toString(),
                             mono
-
                         )
                     }
                 }
@@ -93,16 +91,14 @@ class GetProfileActivity() : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (data != null) {
-
             if (data.data != null) {
                 selectedImage = data.data!!
                 circleImageView.setImageURI(selectedImage)
             }
-
         }
     }
 
-    private fun WriteNewProfile(
+    private fun writeNewProfile(
         name: String,
         email: String,
         age: String,
@@ -111,20 +107,18 @@ class GetProfileActivity() : AppCompatActivity() {
         profileImage: String,
         uid: String,
         mono: String
-
     ) {
         val user = User(name, email, age, experience, location, profileImage, uid, mono)
         database.child("users").child(auth.currentUser?.uid!!).setValue(user)
             .addOnSuccessListener {
+                rlProgressBar.visibility = View.GONE
                 Toast.makeText(this, "Profile created successful", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this, MainActivity::class.java))
+                startActivity(Intent(this, HomeFragment::class.java))
                 finish()
             }
             .addOnFailureListener {
                 Toast.makeText(this, "Error creating profile", Toast.LENGTH_SHORT).show()
             }
-
-
     }
 
 
