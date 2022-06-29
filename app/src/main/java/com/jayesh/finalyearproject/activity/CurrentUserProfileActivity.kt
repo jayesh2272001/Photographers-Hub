@@ -225,7 +225,7 @@ class CurrentUserProfileActivity : AppCompatActivity() {
     ) {
         dbref = FirebaseDatabase.getInstance().getReference("users")
             .child(auth.currentUser?.uid.toString())
-        //Log.i("firebase reset", "updating user ${dbref}")
+
 
         val user = mapOf<String, String>(
             "age" to age,

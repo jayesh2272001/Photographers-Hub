@@ -36,5 +36,7 @@
     <string name="skip">Skip</string>
     <string name="enter_message_CA">Enter a message</string>
     <string name="profile_name">Profile Name</string>
+    <string name="check_availability">Check availability</string>
+    <string name="check_dates">check date</string>
 
 </resources>

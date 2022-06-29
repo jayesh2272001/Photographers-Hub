@@ -9,15 +9,21 @@
         <entry key="app/src/main/res/drawable/back_send_btn.xml" value="0.3095" />
         <entry key="app/src/main/res/drawable/button_back.xml" value="0.344" />
         <entry key="app/src/main/res/drawable/button_primary_back.xml" value="0.22" />
+        <entry key="app/src/main/res/drawable/cardview_back.xml" value="0.2915" />
         <entry key="app/src/main/res/drawable/edit_text_back.xml" value="0.3095" />
         <entry key="app/src/main/res/drawable/et_back.xml" value="0.344" />
+        <entry key="app/src/main/res/drawable/fab_back.xml" value="0.2915" />
         <entry key="app/src/main/res/drawable/ic_back_background.xml" value="0.1855" />
         <entry key="app/src/main/res/drawable/ic_back_foreground.xml" value="0.3105" />
+        <entry key="app/src/main/res/drawable/ic_baseline_login_24.xml" value="0.2915" />
         <entry key="app/src/main/res/drawable/ic_baseline_supervised_user_circle_24.xml" value="0.2915" />
         <entry key="app/src/main/res/drawable/ic_call.xml" value="0.2225" />
         <entry key="app/src/main/res/drawable/ic_google_background.xml" value="0.3105" />
+        <entry key="app/src/main/res/drawable/ic_logout.xml" value="0.2915" />
         <entry key="app/src/main/res/drawable/ic_message.xml" value="0.2225" />
         <entry key="app/src/main/res/drawable/ic_not_bookmarked.xml" value="0.263" />
+        <entry key="app/src/main/res/drawable/ic_payment.xml" value="0.2915" />
+        <entry key="app/src/main/res/drawable/ic_right_chevron.xml" value="0.2915" />
         <entry key="app/src/main/res/drawable/ic_send.xml" value="0.2915" />
         <entry key="app/src/main/res/drawable/indicators_active_background.xml" value="0.341" />
         <entry key="app/src/main/res/drawable/indicators_inactive_background.xml" value="0.341" />
@@ -27,23 +33,27 @@
         <entry key="app/src/main/res/drawable/sent_message_back.xml" value="0.2915" />
         <entry key="app/src/main/res/drawable/view_pager_back.xml" value="0.341" />
         <entry key="app/src/main/res/layout/activity_chat.xml" value="0.4685754189944134" />
+        <entry key="app/src/main/res/layout/activity_check_availl.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_current_user_profile.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_get_payment_details.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_get_profile.xml" value="0.35104166666666664" />
         <entry key="app/src/main/res/layout/activity_get_recent_work.xml" value="0.3494791666666667" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.35104166666666664" />
+        <entry key="app/src/main/res/layout/activity_notification.xml" value="0.3494791666666667" />
         <entry key="app/src/main/res/layout/activity_otp_verify.xml" value="0.35104166666666664" />
         <entry key="app/src/main/res/layout/activity_photographers_desc.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_profile.xml" value="0.35104166666666664" />
         <entry key="app/src/main/res/layout/activity_sign_in.xml" value="0.35104166666666664" />
         <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.35104166666666664" />
+        <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_welcome_auth.xml" value="0.35104166666666664" />
         <entry key="app/src/main/res/layout/bookmark_item.xml" value="0.34791666666666665" />
         <entry key="app/src/main/res/layout/fragment_about.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_bookmark.xml" value="0.3494791666666667" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.35052083333333334" />
-        <entry key="app/src/main/res/layout/fragment_setting.xml" value="0.334375" />
+        <entry key="app/src/main/res/layout/fragment_setting.xml" value="0.33" />
         <entry key="app/src/main/res/layout/nav_header.xml" value="0.35052083333333334" />
+        <entry key="app/src/main/res/layout/notification_item.xml" value="0.33" />
         <entry key="app/src/main/res/layout/onboarding_item_container.xml" value="0.35104166666666664" />
         <entry key="app/src/main/res/layout/received_layout_for_chating_feature.xml" value="0.34791666666666665" />
         <entry key="app/src/main/res/layout/recent_work_adapter_item.xml" value="0.40632603406326034" />

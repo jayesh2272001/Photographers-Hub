@@ -26,7 +26,7 @@ class BookmarkRecyclerAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): BookmarkRecyclerAdapter.BookmarkViewHolder {
+    ): BookmarkViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.bookmark_item, parent, false)
 
@@ -34,7 +34,7 @@ class BookmarkRecyclerAdapter(
     }
 
     override fun onBindViewHolder(
-        holder: BookmarkRecyclerAdapter.BookmarkViewHolder,
+        holder: BookmarkViewHolder,
         position: Int
     ) {
         val photographer = photographersList[position]

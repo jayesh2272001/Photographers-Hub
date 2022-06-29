@@ -17,20 +17,12 @@ import java.util.*
 @SuppressLint("CustomSplashScreen")
 class SplashScreenActivity : AppCompatActivity() {
     lateinit var auth: FirebaseAuth
-    lateinit var ivLogo: ImageView
-    lateinit var savedData: SavedData
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        savedData = SavedData(this)
-        if (savedData.loadDarkModeState() == true) {
-            setTheme(R.style.Dark_FinalYearProject)
-        } else {
-            setTheme(R.style.Theme_FinalYearProject)
-        }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
         //main begins
-        ivLogo = findViewById(R.id.ivLogo)
+
 
         //creating auth instance
         auth = FirebaseAuth.getInstance()
@@ -44,7 +36,7 @@ class SplashScreenActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             }
-        }, 2000) // 3000 is the delayed time in milliseconds.
+        }, 3000) // 3000 is the delayed time in milliseconds.
 
     }
 }

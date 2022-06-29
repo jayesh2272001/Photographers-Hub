@@ -1,15 +1,18 @@
 package com.jayesh.finalyearproject.activity
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.cardview.widget.CardView
+import androidx.compose.ui.window.Dialog
 import androidx.room.Room
 import com.bumptech.glide.Glide
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -38,13 +41,14 @@ class PhotographersDescActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     lateinit var usersArrayList: ArrayList<User>
     private var profileImage: String? = null
-
+    private lateinit var userForCheck: String
+    private lateinit var photographerName: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_photographers_desc)
         //extracting extra from FetchUserAdapter
-        val userForCheck = intent.getStringExtra("userVal")
-        val photographerName = intent.getStringExtra("userName")
+        userForCheck = intent.getStringExtra("userVal").toString()
+        photographerName = intent.getStringExtra("userName").toString()
 
 
         rlProgressBar = findViewById(R.id.rlProgressBar)
@@ -62,13 +66,13 @@ class PhotographersDescActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         usersArrayList = arrayListOf<User>()
 
-        getUserData(userForCheck.toString())
+        getUserData(userForCheck)
         setUpToolBar(tbPDesc)
 
         //check for already bookmarked or not
         val photographersEntity = PhotographersEntity(
-            userForCheck.toString(),
-            photographerName.toString()
+            userForCheck,
+            photographerName
         )
         val checkBookmarked = DBAsyncTask(this, photographersEntity, 1).execute()
         val isBookmarked = checkBookmarked.get()
@@ -121,8 +125,8 @@ class PhotographersDescActivity : AppCompatActivity() {
         //chat with photographer
         fabMessageUser.setOnClickListener {
             val intent = Intent(this, ChatActivity::class.java)
-            val id: String = userForCheck.toString()
-            val name: String = photographerName.toString()
+            val id: String = userForCheck
+            val name: String = photographerName
             intent.putExtra("uid", id)
             intent.putExtra("name", name)
             intent.putExtra("profileImage", profileImage)
@@ -131,7 +135,12 @@ class PhotographersDescActivity : AppCompatActivity() {
 
         //booking photographer
         btnBookNow.setOnClickListener {
-            bookPhotographerWithId(userForCheck, photographerName)
+            val intent = Intent(this, CheckAvailActivity::class.java)
+            val id: String = userForCheck
+            val name: String = photographerName
+            intent.putExtra("uid", id)
+            intent.putExtra("name", name)
+            startActivity(intent)
         }
 
 
@@ -160,9 +169,7 @@ class PhotographersDescActivity : AppCompatActivity() {
         })
     }
 
-    private fun bookPhotographerWithId(photographersId: String?, photographersName: String?) {
-        Toast.makeText(this, "$photographersName is hired ", Toast.LENGTH_SHORT).show()
-    }
+
 
 
     /*Async Database*/

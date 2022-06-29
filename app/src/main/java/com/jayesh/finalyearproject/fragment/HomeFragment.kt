@@ -1,5 +1,6 @@
 package com.jayesh.finalyearproject.fragment
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -17,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.jayesh.finalyearproject.R
 import com.jayesh.finalyearproject.activity.MainActivity
+import com.jayesh.finalyearproject.activity.NotificationActivity
 import com.jayesh.finalyearproject.adapter.FetchUserAdapter
 import com.jayesh.finalyearproject.data.User
 import com.jayesh.finalyearproject.model.Users
@@ -78,6 +80,7 @@ class HomeFragment : Fragment() {
         /*ends*/
 
         dbref.addValueEventListener(object : ValueEventListener {
+            @SuppressLint("NotifyDataSetChanged")
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     for (userSnapshot in snapshot.children) {
@@ -111,11 +114,9 @@ class HomeFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.itmNotification -> Toast.makeText(
-                activity,
-                "notification clicked",
-                Toast.LENGTH_SHORT
-            ).show()
+            R.id.itmNotification -> {
+                startActivity(Intent(activity, NotificationActivity::class.java))
+            }
         }
         return super.onOptionsItemSelected(item)
     }

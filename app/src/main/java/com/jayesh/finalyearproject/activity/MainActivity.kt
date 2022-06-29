@@ -189,7 +189,6 @@ class MainActivity : AppCompatActivity() {
         dbref.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
-                    Log.i("firebase reset", "Got Current user ${snapshot}")
                     val user = snapshot.getValue(User::class.java)
                     tvUserName.text = user?.name?.uppercase()
                     tvLocation.text = user?.location

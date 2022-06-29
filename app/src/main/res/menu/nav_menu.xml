@@ -6,7 +6,7 @@
 
     <item
         android:id="@+id/itmBookmark"
-        android:title="Bookmarks" />
+        android:title="Favourite" />
 
     <item
         android:id="@+id/itmFaq"
@@ -14,9 +14,10 @@
 
     <item
         android:id="@+id/itmSettings"
-        android:title="Setting" />
+        android:title="Settings" />
 
     <item
+        android:visible="false"
         android:id="@+id/itmLogout"
         android:title="Logout" />
 </menu>

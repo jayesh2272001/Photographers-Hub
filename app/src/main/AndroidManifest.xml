@@ -13,11 +13,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FinalYearProject">
         <activity
+            android:name=".activity.GetPaymentDetails"
+            android:exported="false" />
+        <activity
+            android:name=".activity.NotificationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.CheckAvailActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.ChatActivity"
             android:exported="false" />
         <activity
             android:name=".activity.GetRecentWorkActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".activity.CurrentUserProfileActivity"
             android:exported="false" />

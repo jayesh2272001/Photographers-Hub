@@ -40,6 +40,7 @@ class ChatActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
+
         //getting intent from message Photographers Description activity
         receiverUid = intent.getStringExtra("uid").toString()
         name = intent.getStringExtra("name").toString()
