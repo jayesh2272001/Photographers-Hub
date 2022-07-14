@@ -32,9 +32,14 @@
         <entry key="app/src/main/res/drawable/received_message_back.xml" value="0.2915" />
         <entry key="app/src/main/res/drawable/sent_message_back.xml" value="0.2915" />
         <entry key="app/src/main/res/drawable/view_pager_back.xml" value="0.341" />
+        <entry key="app/src/main/res/layout/activity_about_date.xml" value="0.3328125" />
         <entry key="app/src/main/res/layout/activity_chat.xml" value="0.4685754189944134" />
         <entry key="app/src/main/res/layout/activity_check_availl.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_confirm_dates.xml" value="0.3328125" />
+        <entry key="app/src/main/res/layout/activity_confirmed_date_info.xml" value="0.3494791666666667" />
+        <entry key="app/src/main/res/layout/activity_confirmed_dates3.xml" value="0.3494791666666667" />
         <entry key="app/src/main/res/layout/activity_current_user_profile.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_display_image.xml" value="0.3494791666666667" />
         <entry key="app/src/main/res/layout/activity_get_payment_details.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_get_profile.xml" value="0.35104166666666664" />
         <entry key="app/src/main/res/layout/activity_get_recent_work.xml" value="0.3494791666666667" />
@@ -42,23 +47,30 @@
         <entry key="app/src/main/res/layout/activity_notification.xml" value="0.3494791666666667" />
         <entry key="app/src/main/res/layout/activity_otp_verify.xml" value="0.35104166666666664" />
         <entry key="app/src/main/res/layout/activity_photographers_desc.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_previously_req_dates.xml" value="0.3494791666666667" />
         <entry key="app/src/main/res/layout/activity_profile.xml" value="0.35104166666666664" />
         <entry key="app/src/main/res/layout/activity_sign_in.xml" value="0.35104166666666664" />
         <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_terms_and_conditions.xml" value="0.3489583333333333" />
         <entry key="app/src/main/res/layout/activity_welcome_auth.xml" value="0.35104166666666664" />
         <entry key="app/src/main/res/layout/bookmark_item.xml" value="0.34791666666666665" />
+        <entry key="app/src/main/res/layout/confirmed_dates_3.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/dialog_layout.xml" value="0.16" />
         <entry key="app/src/main/res/layout/fragment_about.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_bookmark.xml" value="0.3494791666666667" />
+        <entry key="app/src/main/res/layout/fragment_confirm_your_dated.xml" value="0.3494791666666667" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.35052083333333334" />
         <entry key="app/src/main/res/layout/fragment_setting.xml" value="0.33" />
         <entry key="app/src/main/res/layout/nav_header.xml" value="0.35052083333333334" />
         <entry key="app/src/main/res/layout/notification_item.xml" value="0.33" />
         <entry key="app/src/main/res/layout/onboarding_item_container.xml" value="0.35104166666666664" />
+        <entry key="app/src/main/res/layout/previous_dates_item.xml" value="0.33" />
         <entry key="app/src/main/res/layout/received_layout_for_chating_feature.xml" value="0.34791666666666665" />
         <entry key="app/src/main/res/layout/recent_work_adapter_item.xml" value="0.40632603406326034" />
         <entry key="app/src/main/res/layout/recent_work_item.xml" value="0.3484375" />
         <entry key="app/src/main/res/layout/sent_layout_for_chating_feature.xml" value="0.34791666666666665" />
+        <entry key="app/src/main/res/layout/test.xml" value="0.34791666666666665" />
         <entry key="app/src/main/res/layout/user.xml" value="0.5" />
         <entry key="app/src/main/res/menu/home_toolbar_menu.xml" value="0.3489583333333333" />
         <entry key="app/src/main/res/menu/nav_menu.xml" value="0.35104166666666664" />
