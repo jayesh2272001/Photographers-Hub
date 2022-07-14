@@ -83,56 +83,67 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                <ImageView
                     android:id="@+id/fabCallUser"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
                     android:layout_marginHorizontal="20dp"
-                    android:backgroundTint="@color/yellow"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginBottom="40dp"
+                    android:background="@drawable/fab_back"
+                    android:elevation="5dp"
+                    android:padding="15dp"
                     android:src="@drawable/ic_call"
-                    app:elevation="5dp" />
+                    android:tooltipText="Call" />
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                <ImageView
                     android:id="@+id/fabMessageUser"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="40dp"
                     android:layout_marginHorizontal="20dp"
-                    android:backgroundTint="@color/yellow"
+                    android:layout_marginBottom="40dp"
+                    android:background="@drawable/fab_back"
+                    android:elevation="5dp"
+                    android:padding="15dp"
                     android:src="@drawable/ic_message"
-                    app:elevation="5dp" />
+                    android:tooltipText="Message" />
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                <ImageView
                     android:id="@+id/fabAddBookmark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="40dp"
                     android:layout_marginHorizontal="20dp"
-                    android:backgroundTint="@color/yellow"
+                    android:layout_marginBottom="40dp"
+                    android:background="@drawable/fab_back"
+                    android:elevation="5dp"
+                    android:padding="15dp"
+                    android:src="@drawable/ic_not_bookmarked"
+                    android:tooltipText="Message" />
 
-                    app:elevation="5dp" />
             </LinearLayout>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvRecentWork"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="40dp"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="10dp">
 
-                <ImageView
-                    android:id="@+id/ivFirstImage"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp" />
-
-                <ImageView
-                    android:id="@+id/ivSecondImage"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp" />
-
-                <ImageView
-                    android:id="@+id/ivThirdImage"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewDesc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="10dp"
+                    android:layout_marginHorizontal="20dp"
+                    tools:itemCount="1"
+                    tools:listitem="@layout/recent_work_item" />
 
             </androidx.cardview.widget.CardView>
 

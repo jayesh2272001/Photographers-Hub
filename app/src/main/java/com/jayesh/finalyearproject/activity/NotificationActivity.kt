@@ -41,7 +41,14 @@ class NotificationActivity : AppCompatActivity() {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for (postSnapshot in snapshot.children) {
                         val date = postSnapshot.getValue(Dates::class.java)
-                        dateList.add(date!!)
+                        val test =
+                            Dates(
+                                date?.date!!,
+                                date.availability!!,
+                                date.name!!,
+                                date.senderName!!
+                            )
+                        dateList.add(test)
 
                     }
                     notificationAdapter.notifyDataSetChanged()

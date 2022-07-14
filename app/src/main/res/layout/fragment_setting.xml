@@ -54,6 +54,26 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cvDummy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginBottom="20dp"
+                app:cardElevation="7dp">
+
+                <TextView
+                    android:id="@+id/tvMultipleImages"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="20dp"
+                    android:padding="10dp"
+                    android:text="Upload recent work"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    app:drawableStartCompat="@drawable/ic_recent_work" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
                 android:id="@+id/cvTerms"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -149,25 +169,6 @@
                     app:drawableStartCompat="@drawable/ic_rateus" />
             </androidx.cardview.widget.CardView>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cvDummy"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="40dp"
-                android:layout_marginBottom="20dp"
-                app:cardElevation="7dp">
-
-                <TextView
-                    android:id="@+id/tvMultipleImages"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawablePadding="20dp"
-                    android:padding="10dp"
-                    android:text="Upload multiple Images"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    app:drawableStartCompat="@drawable/ic_rateus" />
-            </androidx.cardview.widget.CardView>
 
         </LinearLayout>
 
@@ -176,11 +177,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_margin="40dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="40dp"
             android:background="@drawable/fab_back"
+            android:elevation="5dp"
             android:padding="15dp"
             android:src="@drawable/ic_logout"
-            android:elevation="5dp"
             android:tooltipText="Logout" />
 
 

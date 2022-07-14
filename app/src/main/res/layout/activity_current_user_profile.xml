@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -20,7 +20,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_heading">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -39,73 +40,209 @@
                 app:civ_border_color="@android:color/transparent"
                 app:civ_border_width="2dp" />
 
-
-            <EditText
-                android:id="@+id/et_first_name"
+            <!--Name-->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginHorizontal="20dp"
-                android:hint="Name"
-                android:textColorHint="#808080"
-                android:textSize="15sp" />
+                android:layout_marginVertical="5dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/et_back"
+                android:orientation="horizontal"
+                android:paddingHorizontal="10dp">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Name:"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/et_email"
+                <EditText
+                    android:id="@+id/et_first_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:backgroundTint="@android:color/transparent"
+                    android:hint="Jayesh Shinde"
+                    android:textColorHint="#808080" />
+            </LinearLayout>
+
+            <!--Email-->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginHorizontal="20dp"
-                android:hint="Email"
-                android:inputType="textEmailAddress"
-                android:textColorHint="#808080"
-                android:textSize="15sp" />
+                android:layout_marginVertical="5dp"
+                android:background="@drawable/et_back"
+                android:orientation="horizontal"
+                android:paddingHorizontal="10dp">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text="Email:"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/et_des"
+                <EditText
+                    android:id="@+id/et_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="10dp"
+                    android:backgroundTint="@android:color/transparent"
+                    android:hint="jay2272001@gmail.com"
+                    android:inputType="textEmailAddress"
+                    android:textColorHint="#808080" />
+            </LinearLayout>
+
+            <!--Experience-->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginHorizontal="20dp"
-                android:hint="Designation"
-                android:inputType="text"
-                android:textColor="#000000"
-                android:textColorHint="#808080"
-                android:textSize="15sp" />
+                android:layout_marginVertical="5dp"
+                android:background="@drawable/et_back"
+                android:orientation="horizontal"
+                android:paddingHorizontal="10dp">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text="Experience:"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/et_age"
+                <EditText
+                    android:id="@+id/et_experience"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="10dp"
+                    android:backgroundTint="@android:color/transparent"
+                    android:hint="2 years"
+                    android:inputType="number"
+                    android:textColor="#000000"
+                    android:textColorHint="#808080" />
+            </LinearLayout>
+
+            <!--Age-->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginHorizontal="20dp"
-                android:hint="Age"
-                android:inputType="text"
-                android:textColor="#000000"
-                android:textColorHint="#808080"
-                android:textSize="15sp" />
+                android:layout_marginVertical="5dp"
+                android:background="@drawable/et_back"
+                android:orientation="horizontal"
+                android:paddingHorizontal="10dp">
 
-            <EditText
-                android:id="@+id/et_location"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text="Age:"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/et_age"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:backgroundTint="@android:color/transparent"
+                    android:hint="Age"
+                    android:inputType="text"
+                    android:textColor="#000000" />
+            </LinearLayout>
+
+            <!--Location-->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginHorizontal="20dp"
-                android:hint="Location"
-                android:inputType="text"
-                android:textColor="#000000"
-                android:textColorHint="#808080"
-                android:textSize="15sp" />
+                android:layout_marginVertical="5dp"
+                android:background="@drawable/et_back"
+                android:orientation="horizontal"
+                android:paddingHorizontal="10dp">
 
-            <EditText
-                android:id="@+id/et_experience"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text="Location:"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/et_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:backgroundTint="@android:color/transparent"
+                    android:hint="Location"
+                    android:inputType="text"
+                    android:textColor="#000000" />
+            </LinearLayout>
+
+            <!--Wages-->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginHorizontal="20dp"
-                android:hint="Experience"
-                android:inputType="text"
-                android:textColor="#000000"
-                android:textColorHint="#808080"
-                android:textSize="15sp" />
+                android:layout_marginVertical="5dp"
+                android:background="@drawable/et_back"
+                android:orientation="horizontal"
+                android:paddingHorizontal="10dp">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="Wages:"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/etWages"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="20dp"
+                    android:backgroundTint="@android:color/transparent"
+                    android:hint="Per day wages (in rupees)"
+                    android:inputType="number"
+                    android:textColor="#000000" />
+            </LinearLayout>
+
+            <!--About-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="5dp"
+                android:background="@drawable/et_back"
+                android:orientation="horizontal"
+                android:paddingHorizontal="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="About:"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/et_des"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:backgroundTint="@android:color/transparent"
+                    android:hint="About (eg.Photographer)"
+                    android:inputType="text"
+                    android:textColor="#000000" />
+            </LinearLayout>
 
             <Button
                 android:id="@+id/bt_update_profile"
@@ -114,10 +251,11 @@
                 android:layout_margin="20dp"
                 android:background="@drawable/button_primary_back"
                 android:elevation="2dp"
-                android:text="Update Profile"
-                android:textSize="15sp" />
+                android:text="Update Profile" />
 
         </LinearLayout>
 
     </ScrollView>
-</LinearLayout>
+
+
+</RelativeLayout>

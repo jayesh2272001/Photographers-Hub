@@ -73,16 +73,16 @@ class WelcomeAuthActivity : AppCompatActivity() {
                 OnBoardingItem(
                     onBoardingImage = R.drawable.on_boarding_01,
                     title = "Find Photographer",
-                    description = ""
+                    description = "Explore Photographer of your choice"
                 ),
                 OnBoardingItem(
                     onBoardingImage = R.drawable.on_boarding_02,
-                    title = "Find Photographer",
-                    description = ""
+                    title = "Hire Photographers",
+                    description = "Hire the professionals who can work efficiently"
                 ), OnBoardingItem(
                     onBoardingImage = R.drawable.on_boarding_03,
-                    title = "Find Photographer",
-                    description = ""
+                    title = "Join Community",
+                    description = "Join the large growing photographers community"
                 )
             )
         )

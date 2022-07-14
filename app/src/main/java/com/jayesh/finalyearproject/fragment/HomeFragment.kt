@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.jayesh.finalyearproject.R
+import com.jayesh.finalyearproject.activity.AboutDateActivity
 import com.jayesh.finalyearproject.activity.MainActivity
 import com.jayesh.finalyearproject.activity.NotificationActivity
 import com.jayesh.finalyearproject.adapter.FetchUserAdapter
@@ -59,7 +60,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun getUserData() {
-        dbref = FirebaseDatabase.getInstance().getReference("users")
+
 
         /*getting the snapshot of current user
         start*/
@@ -78,7 +79,7 @@ class HomeFragment : Fragment() {
             }
         })
         /*ends*/
-
+        dbref = FirebaseDatabase.getInstance().getReference("users")
         dbref.addValueEventListener(object : ValueEventListener {
             @SuppressLint("NotifyDataSetChanged")
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -115,7 +116,7 @@ class HomeFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.itmNotification -> {
-                startActivity(Intent(activity, NotificationActivity::class.java))
+                startActivity(Intent(activity, AboutDateActivity::class.java))
             }
         }
         return super.onOptionsItemSelected(item)

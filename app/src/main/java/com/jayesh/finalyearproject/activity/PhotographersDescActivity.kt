@@ -1,48 +1,52 @@
 package com.jayesh.finalyearproject.activity
 
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.widget.*
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.cardview.widget.CardView
-import androidx.compose.ui.window.Dialog
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import com.bumptech.glide.Glide
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.jayesh.finalyearproject.R
+import com.jayesh.finalyearproject.adapter.ShowRecentWorkAdapter
 import com.jayesh.finalyearproject.data.User
 import com.jayesh.finalyearproject.database.PhotographersDatabase
 import com.jayesh.finalyearproject.database.PhotographersEntity
 import de.hdodenhof.circleimageview.CircleImageView
 
 class PhotographersDescActivity : AppCompatActivity() {
-    lateinit var rlProgressBar: RelativeLayout
-    lateinit var progressBar: ProgressBar
-    lateinit var tbPDesc: Toolbar
-    lateinit var civProfileImage: CircleImageView
-    lateinit var tvUserName: TextView
-    lateinit var tvUserAddress: TextView
-    lateinit var tvUserEmail: TextView
-    lateinit var fabCallUser: FloatingActionButton
-    lateinit var fabMessageUser: FloatingActionButton
-    lateinit var fabAddBookmark: FloatingActionButton
-    lateinit var cvRecentWork: CardView
-    lateinit var btnBookNow: Button
-    lateinit var dbref: DatabaseReference
+
+    private lateinit var recyclerViewDesc: RecyclerView
+    private lateinit var imageUrls: java.util.ArrayList<String>
+    private lateinit var mdbRef: DatabaseReference
+
+    private lateinit var rlProgressBar: RelativeLayout
+    private lateinit var progressBar: ProgressBar
+    private lateinit var tbPDesc: Toolbar
+    private lateinit var civProfileImage: CircleImageView
+    private lateinit var tvUserName: TextView
+    private lateinit var tvUserAddress: TextView
+    private lateinit var tvUserEmail: TextView
+    private lateinit var fabCallUser: ImageView
+    private lateinit var fabMessageUser: ImageView
+    private lateinit var fabAddBookmark: ImageView
+    private lateinit var btnBookNow: Button
+    private lateinit var dbref: DatabaseReference
     private lateinit var auth: FirebaseAuth
-    lateinit var usersArrayList: ArrayList<User>
+    private lateinit var usersArrayList: ArrayList<User>
     private var profileImage: String? = null
     private lateinit var userForCheck: String
     private lateinit var photographerName: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_photographers_desc)
@@ -61,13 +65,17 @@ class PhotographersDescActivity : AppCompatActivity() {
         fabCallUser = findViewById(R.id.fabCallUser)
         fabMessageUser = findViewById(R.id.fabMessageUser)
         fabAddBookmark = findViewById(R.id.fabAddBookmark)
-        cvRecentWork = findViewById(R.id.cvRecentWork)
+        recyclerViewDesc = findViewById(R.id.recyclerViewDesc)
+        mdbRef = FirebaseDatabase.getInstance().reference
         btnBookNow = findViewById(R.id.btnBookNow)
         auth = FirebaseAuth.getInstance()
         usersArrayList = arrayListOf<User>()
+        imageUrls = ArrayList()
 
         getUserData(userForCheck)
         setUpToolBar(tbPDesc)
+
+        selectDefaultImages()
 
         //check for already bookmarked or not
         val photographersEntity = PhotographersEntity(
@@ -135,13 +143,56 @@ class PhotographersDescActivity : AppCompatActivity() {
 
         //booking photographer
         btnBookNow.setOnClickListener {
-            val intent = Intent(this, CheckAvailActivity::class.java)
-            val id: String = userForCheck
-            val name: String = photographerName
-            intent.putExtra("uid", id)
-            intent.putExtra("name", name)
-            startActivity(intent)
+            var name: String? = null
+            mdbRef.child("users").child(FirebaseAuth.getInstance().currentUser?.uid.toString())
+                .child("name")
+                .get()
+                .addOnSuccessListener {
+                    name = it.value.toString()
+                    Log.i("req name", name.toString())
+
+                    val intent = Intent(this, CheckAvailActivity::class.java)
+                    val id: String = userForCheck
+                    val pName: String = photographerName
+                    intent.putExtra("uid", id)
+                    intent.putExtra("CurUserName",name)
+                    intent.putExtra("name", pName)
+                    startActivity(intent)
+                }
+
+
+
         }
+
+
+    }
+
+    private fun selectDefaultImages() {
+        mdbRef.child("users").child(userForCheck).child("recent_work")
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (postSnapshot in snapshot.children) {
+//                        Log.i("Recent work", "Existing work :$postSnapshot")
+
+//                        val image = postSnapshot.getValue(ImageUrl::class.java)
+                        imageUrls.add(postSnapshot.value.toString())
+                    }
+                    /* for (item in imageUrls) {
+                         Log.i("Recent work", "Existing work :$item")
+                     }*/
+
+                    recyclerViewDesc.adapter =
+                        ShowRecentWorkAdapter(this@PhotographersDescActivity, imageUrls)
+                    recyclerViewDesc.layoutManager =
+                        GridLayoutManager(this@PhotographersDescActivity, 3)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+
+            })
+        //setting default images to recycler view
 
 
     }
@@ -168,8 +219,6 @@ class PhotographersDescActivity : AppCompatActivity() {
 
         })
     }
-
-
 
 
     /*Async Database*/

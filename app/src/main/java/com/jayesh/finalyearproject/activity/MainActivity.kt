@@ -13,11 +13,13 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.ui.text.capitalize
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
@@ -136,6 +138,42 @@ class MainActivity : AppCompatActivity() {
         defaultFragment()
 
         setProfileInfo(navMain)
+
+        checkUPIPresent(auth.currentUser?.uid.toString())
+    }
+
+    //checking if the upi id present or not
+    private fun checkUPIPresent(uid: String) {
+        FirebaseDatabase.getInstance().getReference("users")
+            .child(uid)
+            .child("payment_details")
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (!snapshot.exists()) {
+                        Log.i("Snapshot", "not exist")
+                        val snackBar = Snackbar.make(
+                            coordinatorLayout,
+                            "Payment details is not found.",
+                            Snackbar.LENGTH_INDEFINITE
+                        )
+                            .setAction("FILL UP", View.OnClickListener {
+                                startActivity(
+                                    Intent(
+                                        this@MainActivity,
+                                        GetPaymentDetails::class.java
+                                    )
+                                )
+                            }).show()
+
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Log.i("Snapshot error ", error.toString())
+                }
+
+            }
+            )
     }
 
     private fun defaultFragment() {
@@ -191,7 +229,7 @@ class MainActivity : AppCompatActivity() {
                 if (snapshot.exists()) {
                     val user = snapshot.getValue(User::class.java)
                     tvUserName.text = user?.name?.uppercase()
-                    tvLocation.text = user?.location
+                    tvLocation.text = user?.location?.capitalize()
                     Glide.with(this@MainActivity).load(user?.profileImage)
                         .into(profileImage).view
                 }

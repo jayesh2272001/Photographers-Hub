@@ -12,5 +12,6 @@
         android:id="@+id/ivWorkImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/flag_india" />
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_camera_dark" />
 </androidx.cardview.widget.CardView>

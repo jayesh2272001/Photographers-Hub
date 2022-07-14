@@ -1,18 +1,16 @@
 package com.jayesh.finalyearproject.model
 
-class Dates {
+class PreviousDates {
     var date: String? = null
-    var availability: Boolean? = null
     var name: String? = null
-    var senderName: String? = null
+    var availability: Boolean? = null
 
 
     constructor() {}
 
-    constructor(date: String, availability: Boolean, name: String, senderName: String) {
+    constructor(date: String, name: String, availability: Boolean) {
         this.date = date
         this.availability = availability
         this.name = name
-        this.senderName = senderName
     }
 }

@@ -26,6 +26,7 @@ class CurrentUserProfileActivity : AppCompatActivity() {
     private lateinit var etExperience: EditText
     private lateinit var etLocation: EditText
     private lateinit var etAge: EditText
+    private lateinit var etWages: EditText
     private lateinit var etDes: EditText
     private lateinit var etEmail: EditText
     lateinit var profileImage: CircleImageView
@@ -53,6 +54,7 @@ class CurrentUserProfileActivity : AppCompatActivity() {
         etLocation = findViewById(R.id.et_location)
         etAge = findViewById(R.id.et_age)
         etDes = findViewById(R.id.et_des)
+        etWages = findViewById(R.id.etWages)
         etEmail = findViewById(R.id.et_email)
         profileImage = findViewById(R.id.civProfileImage)
         btUpdateProfile = findViewById(R.id.bt_update_profile)
@@ -61,23 +63,32 @@ class CurrentUserProfileActivity : AppCompatActivity() {
 
         getProfileInfo()
         btUpdateProfile.setOnClickListener {
-            //checkProfileChanges()
-            val reference = storage.reference.child(Date().time.toString())
-            reference.putFile(selectedImage).addOnCompleteListener() {
-                if (it.isSuccessful) {
-                    reference.downloadUrl.addOnSuccessListener { task ->
-                        updateProfileEntirely(
-                            etAge.text.toString(),
-                            etEmail.text.toString(),
-                            etExperience.text.toString(),
-                            etLocation.text.toString(),
-                            etName.text.toString(),
-                            task.toString()
-                        )
-                        startActivity(Intent(this, MainActivity::class.java))
+            val res = validateInput()
+            if (res) {
+                val reference = storage.reference.child(Date().time.toString())
+                reference.putFile(selectedImage).addOnCompleteListener() {
+                    if (it.isSuccessful) {
+                        reference.downloadUrl.addOnSuccessListener { task ->
+                            updateProfileEntirely(
+                                etAge.text.toString(),
+                                etEmail.text.toString(),
+                                etExperience.text.toString(),
+                                etLocation.text.toString(),
+                                etName.text.toString(),
+                                task.toString(),
+                                etWages.text.toString(),
+                                etDes.text.toString()
+                            )
+                            Toast.makeText(this, "Profile changes successfully", Toast.LENGTH_SHORT)
+                                .show()
+                            startActivity(Intent(this, MainActivity::class.java))
+                        }
                     }
                 }
+
+
             }
+            //checkProfileChanges()
 
 
         }
@@ -125,8 +136,8 @@ class CurrentUserProfileActivity : AppCompatActivity() {
             etLocation.error = "Please Enter Designation"
             return false
         }
-        if (profileImage.toString() == "") {
-            etDes.error = "Please Enter Designation"
+        if (etWages.text.toString() == "") {
+            etWages.error = "Please Enter Designation"
             return false
         }
         // checking the proper email format
@@ -134,7 +145,6 @@ class CurrentUserProfileActivity : AppCompatActivity() {
             etEmail.error = "Please Enter Valid Email"
             return false
         }
-
         return true
     }
 
@@ -156,7 +166,8 @@ class CurrentUserProfileActivity : AppCompatActivity() {
                     etExperience.setText(user.experience)
                     Glide.with(this@CurrentUserProfileActivity).load(user?.profileImage)
                         .into(profileImage).view
-                    //etDes.hint =user?.desc
+                    etDes.setText(user.about)
+                    etWages.setText(user.wages)
                 }
             }
 
@@ -222,11 +233,9 @@ class CurrentUserProfileActivity : AppCompatActivity() {
         name: String,
         profileImage: String,
         //des: String
+        wages: String,
+        about: String
     ) {
-        dbref = FirebaseDatabase.getInstance().getReference("users")
-            .child(auth.currentUser?.uid.toString())
-
-
         val user = mapOf<String, String>(
             "age" to age,
             "email" to email,
@@ -234,7 +243,13 @@ class CurrentUserProfileActivity : AppCompatActivity() {
             "location" to location,
             "name" to name,
             "profileImage" to profileImage,
+            "wages" to wages,
+            "about" to about
         )
+
+        dbref = FirebaseDatabase.getInstance().getReference("users")
+            .child(auth.currentUser?.uid.toString())
+
         dbref.updateChildren(user).addOnSuccessListener {
             Toast.makeText(this, "profile updated successfully", Toast.LENGTH_SHORT).show()
         }.addOnFailureListener {

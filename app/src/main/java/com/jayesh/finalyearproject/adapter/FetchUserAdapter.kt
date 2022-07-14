@@ -48,10 +48,11 @@ class FetchUserAdapter(val context: Context, val usersList: ArrayList<User>) :
         holder.txtPName.text =
             user.name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
         Glide.with(context).load(user.profileImage).into(holder.civProfileImage).view
-        //holder.txtPPost.text = user.postTitle
+        holder.txtPPost.text = user.about.capitalize()
         holder.txtPExperience.text = user.experience + " years experience overall"
-        holder.txtPLocation.text = user.location
-        holder.txtPFees.text = user.uid
+        holder.txtPLocation.text = user.location.capitalize()
+        holder.txtPFees.text = "Wages: ~ ₹${user.wages}/day"
+        //holder.txtPFees.text = user.uid
         val currUser = user.uid
         val currName = user.name
 

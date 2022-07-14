@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.NotificationActivity">
+    android:orientation="vertical"
+    tools:context=".activity.ConfirmedDates3Activity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/tbNotify"
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvNotifyActivity"
+        android:id="@+id/rvConfirmedDates"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/notification_item"
         tools:itemCount="1"
-        android:layout_below="@+id/tbNotify" />
-
-</RelativeLayout>
+        tools:listitem="@layout/confirmed_dates_3" />
+</LinearLayout>

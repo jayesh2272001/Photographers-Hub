@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.NotificationActivity">
+    tools:context=".activity.ConfirmDatesActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tbNotify"
@@ -15,8 +15,7 @@
         android:id="@+id/rvNotifyActivity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/notification_item"
+        android:layout_below="@+id/tbNotify"
         tools:itemCount="1"
-        android:layout_below="@+id/tbNotify" />
-
+        tools:listitem="@layout/notification_item" />
 </RelativeLayout>

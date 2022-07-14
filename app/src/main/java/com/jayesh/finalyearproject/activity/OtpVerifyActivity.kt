@@ -98,7 +98,7 @@ class OtpVerifyActivity : AppCompatActivity() {
                     // [START read_message]
                     myRef.child(auth.currentUser?.uid!!).get()
                         .addOnSuccessListener {
-                            Log.i("firebase", "Got value in otpverifyactivity ${it.value}")
+                            Log.i("firebase", "Got value in otp verify activity ${it.value}")
                             //intent user towards the main activity
                             if (it.value != null) {
                                 Toast.makeText(this, "login successfully", Toast.LENGTH_SHORT)
@@ -163,14 +163,4 @@ class OtpVerifyActivity : AppCompatActivity() {
 
         }
 
-
-/*    override fun onStart() {
-        super.onStart()
-        if (auth.currentUser != null) {
-            val intent = Intent(this, GetProfileActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-
-    }*/
 }
