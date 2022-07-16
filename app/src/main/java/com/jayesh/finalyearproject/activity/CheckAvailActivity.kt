@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -19,6 +20,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class CheckAvailActivity : AppCompatActivity() {
+    private lateinit var rlProgressBar: RelativeLayout
     private lateinit var tbCheckAvail: Toolbar
     private lateinit var layout01: RelativeLayout
     private lateinit var photographersUid: String
@@ -42,7 +44,7 @@ class CheckAvailActivity : AppCompatActivity() {
         photographersName = intent.getStringExtra("name").toString()
         senderName = intent.getStringExtra("CurUserName").toString()
 
-
+        rlProgressBar = findViewById(R.id.rlProgressBar)
         layout01 = findViewById(R.id.layout01)
         tbCheckAvail = findViewById(R.id.tbCheckAvail)
         etDate = findViewById(R.id.etDate)
@@ -81,6 +83,7 @@ class CheckAvailActivity : AppCompatActivity() {
         }
 
         btnCheckDates.setOnClickListener {
+            rlProgressBar.visibility = View.VISIBLE
             var conditionVar = false
             val date = etDate.text.toString()
             val availability = false
@@ -128,28 +131,16 @@ class CheckAvailActivity : AppCompatActivity() {
                                             }
                                     }
                                 //clearing the edittext after pushing data to firebase
+                                rlProgressBar.visibility = View.GONE
                                 etDate.text.clear()
 
                             }
-                            /* else {
-                                 Toast.makeText(
-                                     this@CheckAvailActivity,
-                                     "You have already sent a request for $date",
-                                     Toast.LENGTH_SHORT
-                                 ).show()
-                             }*/
                         }
 
                         override fun onCancelled(error: DatabaseError) {
-                            TODO("Not yet implemented")
+                            Log.e("DB error",error.toString())
                         }
-
                     })
-
-
-                //checking availability of date
-//                Log.i("Condition", conditionVar.toString())
-
             } else {
                 Toast.makeText(this, "Please select a date", Toast.LENGTH_SHORT).show()
             }
@@ -171,4 +162,5 @@ class CheckAvailActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
 }

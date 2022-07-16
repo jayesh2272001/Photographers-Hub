@@ -3,34 +3,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.HomeFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        tools:itemCount="2"
         tools:listitem="@layout/user" />
 
     <RelativeLayout
         android:id="@+id/rlProgressBar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="invisible"
+        android:visibility="gone"
         android:background="@color/white">
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true" />
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animationView"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/progress_bar_animation_lottie"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_above="@id/tvInfo"
+            android:layout_centerHorizontal="true" />
 
         <TextView
+            android:id="@+id/tvInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/progressBar"
-            android:layout_marginTop="5dp"
-            android:gravity="center_horizontal"
-            android:text="Loading..." />
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="Have some patience"
+            android:textColor="@color/green" />
     </RelativeLayout>
 
 </FrameLayout>

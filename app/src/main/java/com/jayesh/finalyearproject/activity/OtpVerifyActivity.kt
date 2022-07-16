@@ -74,7 +74,7 @@ class OtpVerifyActivity : AppCompatActivity() {
         //setting spannable text colour as yellow
         val spannable = SpannableString(txtEnterDesc.text)
         spannable.setSpan(
-            ForegroundColorSpan(getColor(R.color.yellow)),
+            ForegroundColorSpan(getColor(R.color.green)),
             0,
             13,
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE

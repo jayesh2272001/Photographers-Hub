@@ -3,6 +3,7 @@ package com.jayesh.finalyearproject.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import androidx.cardview.widget.CardView
 import com.jayesh.finalyearproject.R
@@ -21,6 +22,7 @@ class AboutDateActivity : AppCompatActivity() {
         cvDateToConfirm = findViewById(R.id.cvDateToConfirm)
         cvPreviouslyRequestedDates = findViewById(R.id.cvPreviouslyRequestedDates)
         cvConfirmedDates = findViewById(R.id.cvConfirmedDates)
+        setUpToolBar(toolbar)
 
         cvDateToConfirm.setOnClickListener {
             startActivity(Intent(this, ConfirmDatesActivity::class.java))
@@ -33,5 +35,26 @@ class AboutDateActivity : AppCompatActivity() {
         cvConfirmedDates.setOnClickListener {
             startActivity(Intent(this, ConfirmedDates3Activity::class.java))
         }
+    }
+
+    private fun setUpToolBar(toolbar: Toolbar) {
+        setSupportActionBar(toolbar)
+        supportActionBar?.title = ""
+        supportActionBar?.setHomeButtonEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
     }
 }

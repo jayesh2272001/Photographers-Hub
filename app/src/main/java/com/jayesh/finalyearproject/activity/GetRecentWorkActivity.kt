@@ -38,7 +38,6 @@ class GetRecentWorkActivity : AppCompatActivity() {
     private lateinit var mdbRef: DatabaseReference
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_get_recent_work)
@@ -121,6 +120,8 @@ class GetRecentWorkActivity : AppCompatActivity() {
                         .setValue(hashMap).addOnSuccessListener {
                             Toast.makeText(this, "Images uploaded successfully", Toast.LENGTH_SHORT)
                                 .show()
+                            rlProgressBar.visibility = View.GONE
+                            startActivity(Intent(this, MainActivity::class.java))
                         }
 
                 }

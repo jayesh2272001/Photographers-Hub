@@ -10,7 +10,7 @@
         android:layout_height="70dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        android:src="@color/yellow" />
+        android:src="@color/green" />
 
     <TextView
         android:id="@+id/tvUserName"
@@ -44,7 +44,7 @@
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@id/ivLogo"
         android:text="View and edit profile"
-        android:textColor="@color/yellow"
+        android:textColor="@color/green"
         android:textSize="14sp" />
 
     <View
@@ -54,5 +54,5 @@
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="20dp"
         android:alpha="0.8"
-        android:background="@color/yellow" />
+        android:background="@color/green" />
 </RelativeLayout>

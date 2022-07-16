@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cvLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="15dp"
+    android:layout_marginVertical="10dp"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="5dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp">
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvAbout"
+            android:text="Name: Jayesh arun shinde"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvAbout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Candid Photographer"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textColor="@color/green"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@id/tvName"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/back_send_btn"
+            android:paddingHorizontal="7dp"
+            android:paddingVertical="3dp"
+            android:text="Date: 22/07/2001"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/tvTransId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvName"
+            android:text="Transaction Id: 2jiy789kal342"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tvTransDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvTransId"
+            android:text="Transaction date: 15/6/2019"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tvTransStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvTransDate"
+            android:text="Transaction status: SUCCESS"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

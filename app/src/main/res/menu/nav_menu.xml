@@ -7,6 +7,12 @@
     <item
         android:id="@+id/itmBookmark"
         android:title="Favourite" />
+    <item
+        android:id="@+id/itmMyHires"
+        android:title="My Hires" />
+    <item
+        android:id="@+id/itmBookedDates"
+        android:title="Booked Dates" />
 
     <item
         android:id="@+id/itmFaq"
@@ -17,7 +23,7 @@
         android:title="Settings" />
 
     <item
-        android:visible="false"
         android:id="@+id/itmLogout"
-        android:title="Logout" />
+        android:title="Logout"
+        android:visible="false" />
 </menu>

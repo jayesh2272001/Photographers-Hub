@@ -61,41 +61,33 @@
 
     </RelativeLayout>
 
-    <!--  Second layout  -->
+
     <RelativeLayout
-        android:layout_below="@id/tbCheckAvail"
-        android:id="@+id/layout02"
+        android:id="@+id/rlProgressBar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:elevation="10dp"
+        android:background="@color/white"
         android:visibility="gone">
 
         <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/animationView2"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:id="@+id/animationView4"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_above="@id/tvInfo"
             android:layout_centerHorizontal="true"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
-            app:lottie_rawRes="@raw/gpay_animation_lottie" />
+            app:lottie_rawRes="@raw/progress_bar_animation_lottie" />
 
         <TextView
-            android:id="@+id/tvDetails"
+            android:id="@+id/tvInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/animationView2"
-            android:layout_marginHorizontal="20dp"
-            android:text="Name is available on 30/07/2011 to make payment and complete hiring, Clickthe button below"
-            android:textSize="18sp" />
-
-        <Button
-            android:id="@+id/btnPayment"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_below="@+id/tvDetails"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginVertical="20dp"
-            android:text="Proceed to pay" />
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="Have some patience"
+            android:textColor="@color/green" />
 
     </RelativeLayout>
 </RelativeLayout>

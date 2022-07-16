@@ -7,6 +7,7 @@ import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -28,9 +29,7 @@ class PhotographersDescActivity : AppCompatActivity() {
     private lateinit var recyclerViewDesc: RecyclerView
     private lateinit var imageUrls: java.util.ArrayList<String>
     private lateinit var mdbRef: DatabaseReference
-
     private lateinit var rlProgressBar: RelativeLayout
-    private lateinit var progressBar: ProgressBar
     private lateinit var tbPDesc: Toolbar
     private lateinit var civProfileImage: CircleImageView
     private lateinit var tvUserName: TextView
@@ -56,7 +55,6 @@ class PhotographersDescActivity : AppCompatActivity() {
 
 
         rlProgressBar = findViewById(R.id.rlProgressBar)
-        progressBar = findViewById(R.id.progressBar)
         tbPDesc = findViewById(R.id.tbPDesc)
         civProfileImage = findViewById(R.id.civProfileImage)
         tvUserName = findViewById(R.id.tvUserName)
@@ -71,10 +69,10 @@ class PhotographersDescActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         usersArrayList = arrayListOf<User>()
         imageUrls = ArrayList()
+        rlProgressBar.visibility = View.VISIBLE
 
         getUserData(userForCheck)
         setUpToolBar(tbPDesc)
-
         selectDefaultImages()
 
         //check for already bookmarked or not
@@ -155,11 +153,10 @@ class PhotographersDescActivity : AppCompatActivity() {
                     val id: String = userForCheck
                     val pName: String = photographerName
                     intent.putExtra("uid", id)
-                    intent.putExtra("CurUserName",name)
+                    intent.putExtra("CurUserName", name)
                     intent.putExtra("name", pName)
                     startActivity(intent)
                 }
-
 
 
         }
@@ -172,15 +169,8 @@ class PhotographersDescActivity : AppCompatActivity() {
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for (postSnapshot in snapshot.children) {
-//                        Log.i("Recent work", "Existing work :$postSnapshot")
-
-//                        val image = postSnapshot.getValue(ImageUrl::class.java)
                         imageUrls.add(postSnapshot.value.toString())
                     }
-                    /* for (item in imageUrls) {
-                         Log.i("Recent work", "Existing work :$item")
-                     }*/
-
                     recyclerViewDesc.adapter =
                         ShowRecentWorkAdapter(this@PhotographersDescActivity, imageUrls)
                     recyclerViewDesc.layoutManager =
@@ -188,13 +178,10 @@ class PhotographersDescActivity : AppCompatActivity() {
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
+                    Log.e("DB error", error.toString())
                 }
 
             })
-        //setting default images to recycler view
-
-
     }
 
     private fun getUserData(userForCheck: String) {
@@ -211,10 +198,11 @@ class PhotographersDescActivity : AppCompatActivity() {
                         .into(civProfileImage).view
                     profileImage = user.profileImage
                 }
+                rlProgressBar.visibility = View.GONE
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+                Log.e("DB error", error.toString())
             }
 
         })
@@ -271,5 +259,11 @@ class PhotographersDescActivity : AppCompatActivity() {
             finish()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
     }
 }

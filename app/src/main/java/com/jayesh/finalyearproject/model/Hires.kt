@@ -11,6 +11,8 @@ class Hires {
     var transactionRefId: String? = null
     var approvalRefNo: String? = null
     var amount: String? = null
+    var userContact: String? = null
+    var payDate: String? = null
 
 
     constructor() {}
@@ -20,22 +22,22 @@ class Hires {
         uid: String,
         uDate: String,
         senderUpi: String,
-        receiverUpi: String,
         transactionStatus: String,
         transactionId: String,
         transactionRefId: String,
-        approvalRefNo: String,
-        amount: String
+        amount: String,
+        userContact: String,
+        payDate: String,
     ) {
         this.uname = uname
         this.uid = uid
         this.uDate = uDate
         this.senderUpi = senderUpi
-        this.receiverUpi = receiverUpi
         this.transactionStatus = transactionStatus
         this.transactionId = transactionId
         this.transactionRefId = transactionRefId
-        this.approvalRefNo = approvalRefNo
         this.amount = amount
+        this.userContact = userContact
+        this.payDate = payDate
     }
 }

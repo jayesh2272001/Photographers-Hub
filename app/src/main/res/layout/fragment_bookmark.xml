@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.BookmarkFragment">
 
     <RelativeLayout
@@ -22,5 +23,31 @@
             android:layout_below="@id/toolbar"
             android:focusable="true"
             android:focusableInTouchMode="true" />
+
+        <RelativeLayout
+            android:id="@+id/rvProgressLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:visibility="gone">
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/animationView"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/progress_bar_animation_lottie"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_above="@id/tvInfo"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:id="@+id/tvInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="Have some patience"
+                android:textColor="@color/green" />
+        </RelativeLayout>
     </RelativeLayout>
 </FrameLayout>

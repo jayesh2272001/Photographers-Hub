@@ -1,10 +1,14 @@
 package com.jayesh.finalyearproject.activity
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
+import android.view.MenuItem
+import android.view.View
+import android.widget.RelativeLayout
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +23,7 @@ import java.util.ArrayList
 
 class PreviouslyReqDatesActivity : AppCompatActivity() {
     private lateinit var tbNotify: Toolbar
+    private lateinit var rlProgressBar: RelativeLayout
     private lateinit var rvNotifyActivity: RecyclerView
     private lateinit var mdbRef: DatabaseReference
     private lateinit var dateList: ArrayList<PreviousDates>
@@ -29,10 +34,12 @@ class PreviouslyReqDatesActivity : AppCompatActivity() {
         setContentView(R.layout.activity_previously_req_dates)
 
         tbNotify = findViewById(R.id.tbNotify)
+        rlProgressBar = findViewById(R.id.rlProgressBar)
         rvNotifyActivity = findViewById(R.id.rvNotifyActivity)
         mdbRef = FirebaseDatabase.getInstance().reference
         dateList = ArrayList()
         val currId = FirebaseAuth.getInstance().currentUser?.uid.toString()
+        setUpToolBar(tbNotify)
 
         mdbRef.child("users").child(currId).child("date-chq-req-sent")
             .addValueEventListener(object : ValueEventListener {
@@ -67,21 +74,22 @@ class PreviouslyReqDatesActivity : AppCompatActivity() {
                                 }
 
                                 override fun onCancelled(error: DatabaseError) {
-                                    TODO("Not yet implemented")
+                                    Log.e("error", error.toString())
                                 }
                             })
                     }
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
+                    Log.e("error", error.toString())
                 }
 
             })
-
+        rlProgressBar.visibility = View.VISIBLE
         notificationAdapter = PreviousDatesAdapter(this, dateList)
         rvNotifyActivity.layoutManager = LinearLayoutManager(this)
         rvNotifyActivity.adapter = notificationAdapter
+        rlProgressBar.visibility = View.GONE
     }
 
     fun getName(newId: String): String? {
@@ -95,5 +103,20 @@ class PreviouslyReqDatesActivity : AppCompatActivity() {
 
             }
         return name
+    }
+
+    private fun setUpToolBar(toolbar: Toolbar) {
+        setSupportActionBar(toolbar)
+        supportActionBar?.title = "Previously Requested Dates"
+        supportActionBar?.setHomeButtonEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            startActivity(Intent(this, AboutDateActivity::class.java))
+            finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

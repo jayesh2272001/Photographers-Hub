@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RelativeLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,6 +21,7 @@ import com.jayesh.finalyearproject.database.PhotographersEntity
 class BookmarkFragment : Fragment() {
     var PhotographersList = listOf<PhotographersEntity>()
     lateinit var rvBookmark: RecyclerView
+    private lateinit var rvProgressLayout: RelativeLayout
     lateinit var recyclerAdapter: BookmarkRecyclerAdapter
     lateinit var layoutManager: LinearLayoutManager
 
@@ -28,15 +30,18 @@ class BookmarkFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_bookmark, container, false)
-        rvBookmark = view.findViewById(R.id.rvBookmark)
 
+        rvBookmark = view.findViewById(R.id.rvBookmark)
+        rvProgressLayout = view.findViewById(R.id.rvProgressLayout)
         layoutManager = GridLayoutManager(activity as Context, 2)
         PhotographersList = RetrieveBookmarks(activity as Context).execute().get()
 
         if (activity != null) {
+            rvProgressLayout.visibility = View.VISIBLE
             recyclerAdapter = BookmarkRecyclerAdapter(activity as Context, PhotographersList)
             rvBookmark.adapter = recyclerAdapter
             rvBookmark.layoutManager = layoutManager
+            rvProgressLayout.visibility = View.GONE
         }
         return view
     }

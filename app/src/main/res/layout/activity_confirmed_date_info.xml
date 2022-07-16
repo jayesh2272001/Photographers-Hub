@@ -4,9 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.ConfirmedDateInfoActivity">
-
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="4dp"
+        android:minHeight="?attr/actionBarSize" />
     <TextView
+        android:layout_below="@id/toolbar"
         android:id="@+id/tvDate"
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"

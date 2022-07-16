@@ -1,38 +1,42 @@
 package com.jayesh.finalyearproject.activity
 
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.net.ConnectivityManager
-import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.jayesh.finalyearproject.R
+import com.jayesh.finalyearproject.data.User
+import com.jayesh.finalyearproject.model.Hires
 import com.jayesh.finalyearproject.model.UPI
-import dev.shreyaspatil.easyupipayment.EasyUpiPayment
-import dev.shreyaspatil.easyupipayment.listener.PaymentStatusListener
-import dev.shreyaspatil.easyupipayment.model.PaymentApp
-import dev.shreyaspatil.easyupipayment.model.TransactionDetails
+import com.jayesh.finalyearproject.model.Users
+import com.razorpay.Checkout
+import com.razorpay.PaymentData
+import com.razorpay.PaymentResultWithDataListener
+import org.json.JSONObject
+import java.time.LocalDateTime
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.random.Random
-import kotlin.random.Random.Default.nextInt
 
 
-class ConfirmedDateInfoActivity : AppCompatActivity() {
+class ConfirmedDateInfoActivity : AppCompatActivity(), PaymentResultWithDataListener {
     private lateinit var pId: String
     private lateinit var pName: String
     private lateinit var cDate: String
     private lateinit var uDate: String
+    private var upiId: String? = null
     private var payableAmount: String? = null
     private lateinit var mdbRef: DatabaseReference
 
+    private lateinit var toolbar: Toolbar
     private lateinit var tvDate: TextView
     private lateinit var tvUserName: TextView
     private lateinit var tvChangedOn: TextView
@@ -46,6 +50,7 @@ class ConfirmedDateInfoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_confirmed_date_info)
 
+        toolbar = findViewById(R.id.toolbar)
         tvDate = findViewById(R.id.tvDate)
         tvUserName = findViewById(R.id.tvUserName)
         tvChangedOn = findViewById(R.id.tvChangedOn)
@@ -54,6 +59,7 @@ class ConfirmedDateInfoActivity : AppCompatActivity() {
         tvPaymentInfo = findViewById(R.id.tvPaymentInfo)
         mdbRef = FirebaseDatabase.getInstance().reference
 
+        setUpToolBar(toolbar)
         pId = intent.getStringExtra("pid").toString()
         pName = intent.getStringExtra("p-name").toString()
         cDate = intent.getStringExtra("c-date").toString()
@@ -86,52 +92,17 @@ class ConfirmedDateInfoActivity : AppCompatActivity() {
                             upi = test?.upiId.toString()
                         }
                         Log.i("UPI", upi.toString())
-
+                        upiId = upi
 
                         //starts
                         val transId = (0..1000000000000).random()
                         Log.i("UPI", transId.toString())
-                        val am = payableAmount?.toFloat()
+                        val am = payableAmount
                         Log.i("UPI", "amount $am")
 
-                        //upi starts
 
-                        if (am.toString().length > 0) {
-                            var uri = Uri.parse("upi://pay").buildUpon()
-                                .appendQueryParameter("pa", "9763570430@postbank")
-                                .appendQueryParameter("mc", "")
-                                .appendQueryParameter("tid", "t$transId")
-                                .appendQueryParameter("tr", "tr$transId")
-//                                .appendQueryParameter("pa", upi)
-                                .appendQueryParameter("pn", pName)
-                                .appendQueryParameter("tn", "pay to $pName")
-                                .appendQueryParameter("am", "1.0")
-                                .appendQueryParameter("cu", "INR")
-                                .build();
-
-                            var intent = Intent(Intent.ACTION_VIEW);
-                            intent.data = uri
-                            var intentChooser = Intent.createChooser(intent, "Pay with")
-
-                            if (null != intentChooser.resolveActivity(getPackageManager())) {
-                                startActivityForResult(intentChooser, UPI_PAYMENT);
-                            } else {
-                                Toast.makeText(
-                                    this@ConfirmedDateInfoActivity,
-                                    "No UPI app found, please install one to continue",
-                                    Toast.LENGTH_SHORT
-                                ).show();
-                            }
-
-                        } else {
-                            Toast.makeText(
-                                this@ConfirmedDateInfoActivity,
-                                "Please enter amount",
-                                Toast.LENGTH_SHORT
-                            ).show();
-
-                        }
-                        //upi ends
+                        /*Razor-pay integration*/
+                        paynow(upi, am, pName, cDate)
 
 
                     }
@@ -143,6 +114,217 @@ class ConfirmedDateInfoActivity : AppCompatActivity() {
         }
 
     }
+
+    private fun paynow(upi: String?, amount: String?, pName: String, cDate: String) {
+        val co = Checkout()
+        val am = amount?.toInt()
+        val com = (am!! * 0.05)
+        val finalAmount = (am + com)
+        Log.i("payment info", finalAmount.toInt().toString())
+        Log.i("payment info", com.toString())
+
+
+        try {
+            val option = JSONObject()
+            option.put("name", "Photographers Hub")
+            option.put("Description", "Money will be transferred to $pName shortly")
+            option.put("image", "https://s3.amazonaws.com/rzp-mobile/images/rzp.png")
+            option.put("currency", "INR")
+            option.put("amount", "${finalAmount.toInt()}00")
+
+
+            val prefill = JSONObject()
+            prefill.put("email", "")
+            prefill.put("contact", "")
+            option.put("prefill", prefill)
+
+            co.open(this, option)
+
+
+        } catch (e: Exception) {
+            Toast.makeText(this, "Error in payment", Toast.LENGTH_SHORT).show()
+            Log.e("Exception", e.toString())
+        }
+
+
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onPaymentSuccess(transactionId: String?, paymentData: PaymentData) {
+        Toast.makeText(this, "Payment successful", Toast.LENGTH_SHORT).show()
+
+        var status = "SUCCESS"
+        Toast.makeText(this, transactionId.toString(), Toast.LENGTH_SHORT).show()
+        Log.i("payment name", pName)
+        Log.i("payment pid", pId)
+        Log.i("payment date", cDate)
+        Log.i("payment upi", upiId.toString())
+        Log.i("payment status", status)
+        Log.i("payment tid", transactionId.toString())
+        Log.i("payment paymentId", paymentData.paymentId.toString())
+        Log.i("payment userContact", FirebaseAuth.getInstance().currentUser?.phoneNumber.toString())
+        Log.i("payment amount", payableAmount.toString())
+        Log.i("payment email", paymentData.userEmail.toString())
+
+
+
+        pushInfo(
+            pName,
+            pId,
+            cDate,
+            upiId.toString(),
+            status,
+            transactionId.toString(),
+            paymentData.paymentId,
+            payableAmount.toString(),
+            FirebaseAuth.getInstance().currentUser?.phoneNumber.toString(),
+        )
+    }
+
+    override fun onPaymentError(p0: Int, p1: String?, p2: PaymentData?) {
+        Log.e("Payment Error", p1.toString())
+        Toast.makeText(this, "Error in payment", Toast.LENGTH_SHORT).show()
+    }
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun pushInfo(
+        pName: String,
+        pId: String,
+        cDate: String,
+        upiId: String,
+        status: String,
+        transactionId: String,
+        paymentId: String?,
+        payableAmount: String,
+        userContact: String?,
+    ) {
+        FirebaseDatabase.getInstance().getReference("users")
+            .child(pId)
+            .get()
+            .addOnSuccessListener {
+                FirebaseDatabase.getInstance().getReference("users")
+                    .child(pId)
+                    .child("payment_details")
+                    .get()
+                    .addOnSuccessListener { dataForManasisUpi ->
+                        val upiData = dataForManasisUpi.getValue(UPI::class.java)
+                        val manasisData = it.getValue(User::class.java)
+                        val hiresObj = Hires(
+                            manasisData?.name.toString(),
+                            manasisData?.uid.toString(),
+                            cDate,
+                            upiData?.upiId.toString(),
+                            status,
+                            transactionId,
+                            paymentId.toString(),
+                            payableAmount,
+                            manasisData?.mono.toString(),
+                            LocalDateTime.now().toString()
+                        )
+                        //adding values to firebase
+                        FirebaseDatabase.getInstance().getReference("users")
+                            .child(FirebaseAuth.getInstance().currentUser?.uid.toString())
+                            .child("my-hires")
+                            .push()
+                            .setValue(hiresObj)
+                            .addOnSuccessListener {
+                                //code to remove date from current users database (confirmed-dates)
+                                Log.i("payment Value", "added successfully")
+
+                                FirebaseDatabase.getInstance().getReference("users")
+                                    .child(FirebaseAuth.getInstance().currentUser?.uid.toString())
+                                    .child("confirmed-dates")
+                                    .orderByChild("date")
+                                    .equalTo(cDate)
+                                    .addListenerForSingleValueEvent(
+                                        object : ValueEventListener {
+                                            override fun onDataChange(snapshot: DataSnapshot) {
+                                                for (dataSnapshot in snapshot.children) {
+                                                    dataSnapshot.ref.removeValue()
+                                                }
+                                                createMyBookedDates(
+                                                    pName,
+                                                    pId,
+                                                    cDate,
+                                                    upiId,
+                                                    status,
+                                                    transactionId,
+                                                    paymentId.toString(),
+                                                    payableAmount,
+                                                    userContact.toString(),
+                                                    LocalDateTime.now().toString()
+                                                )
+                                            }
+
+
+                                            override fun onCancelled(error: DatabaseError) {
+                                                Log.e("DB Error", error.toString())
+                                            }
+                                        })
+                            }
+                    }
+            }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun createMyBookedDates(
+        pName: String,
+        pId: String,
+        cDate: String,
+        upiId: String,
+        status: String,
+        transactionId: String,
+        paymentId: String,
+        payableAmount: String,
+        userContact: String,
+        toString2: String
+    ) {
+
+
+        FirebaseDatabase.getInstance().getReference("users")
+            .child(FirebaseAuth.getInstance().currentUser?.uid.toString())
+            .get()
+            .addOnSuccessListener {
+                FirebaseDatabase.getInstance().getReference("users")
+                    .child(FirebaseAuth.getInstance().currentUser?.uid.toString())
+                    .child("payment_details")
+                    .get().addOnSuccessListener { forUpiInfo ->
+                        val dataForUpiOnly = forUpiInfo.getValue(UPI::class.java)
+                        val currUserData = it.getValue(User::class.java)
+                        val hiresObj = Hires(
+                            currUserData?.name.toString(),
+                            currUserData?.uid.toString(),
+                            cDate,
+                            dataForUpiOnly?.upiId.toString(),
+                            status,
+                            transactionId,
+                            paymentId,
+                            payableAmount,
+                            currUserData?.mono.toString(),
+                            LocalDateTime.now().toString()
+                        )
+                        FirebaseDatabase.getInstance().getReference("users")
+                            .child(this.pId)
+                            .child("my-booked-dates")
+                            .push()
+                            .setValue(hiresObj)
+                            .addOnSuccessListener {
+                                startActivity(
+                                    Intent(
+                                        this@ConfirmedDateInfoActivity,
+                                        AboutDateActivity::class.java
+                                    )
+                                )
+                                finish()
+                            }
+                    }
+
+
+            }
+
+    }
+
 
     private fun getWages(id: String) {
         FirebaseDatabase.getInstance().getReference("users")
@@ -156,87 +338,19 @@ class ConfirmedDateInfoActivity : AppCompatActivity() {
             }
     }
 
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        when (requestCode) {
-            UPI_PAYMENT -> {
-                if (resultCode == Activity.RESULT_OK || resultCode == 1) {
-                    var list: java.util.ArrayList<String>
-                    if (data != null) {
-                        list = ArrayList()
-                        data.getStringExtra("resposne")?.let { list.add(it) }
-
-                    } else {
-                        list = ArrayList()
-                        list.add("No Reponse")
-                    }
-                } else {
-                    var list: java.util.ArrayList<String>
-                    list = ArrayList()
-                    list.add("Error")
-
-                    checkPaymentStatus(list)
-                }
-            }
-        }
+    private fun setUpToolBar(toolbar: Toolbar) {
+        setSupportActionBar(toolbar)
+        supportActionBar?.title = "Date Info"
+        supportActionBar?.setHomeButtonEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    private fun checkPaymentStatus(list: java.util.ArrayList<String>) {
-
-        if (isConnectionAvailable(applicationContext)) {
-            var str = list.get(0);
-            Log.d("UPIPAY", "upiPaymentDataOperation: " + str);
-            if (str == null)
-                str = "discard"
-            var status: String? = null;
-            var txtnNo: String? = null;
-            var paymentCancel: String? = null;
-
-            var response = str.split("&")
-            for (i in 0 until response.size) {
-                val equalStr = response[i].split("=")
-                if (equalStr.size >= 2) {
-                    if (equalStr[0].toLowerCase() == "Status".toLowerCase()) {
-                        status = equalStr[1].toLowerCase()
-                    } else if (equalStr[0].toLowerCase() == "ApprovalRefNo".toLowerCase() || equalStr[0].toLowerCase() == "txnRef".toLowerCase()) {
-                        txtnNo = equalStr[1]
-                    }
-                } else {
-                    paymentCancel = "Payment cancelled by user."
-                }
-            }
-            if (status.equals("success")) {
-                //Code to handle successful transaction here.
-                Toast.makeText(this, "Transaction successful.", Toast.LENGTH_SHORT).show();
-                Log.d("UPI", "responseStr: " + txtnNo);
-            } else if ("Payment cancelled by user.".equals(paymentCancel)) {
-                Toast.makeText(this, "Payment cancelled by user.", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "Transaction failed.Please try again", Toast.LENGTH_SHORT)
-                    .show();
-            }
-
-        } else {
-            Toast.makeText(this, "Please check your network", Toast.LENGTH_SHORT).show();
-
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
         }
-
+        return super.onOptionsItemSelected(item)
     }
 
-    fun isConnectionAvailable(context: Context): Boolean {
-        val connectivityManager =
-            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        if (connectivityManager != null) {
-            val netInfo = connectivityManager.activeNetworkInfo
-            if (netInfo != null && netInfo.isConnected
-                && netInfo.isConnectedOrConnecting
-                && netInfo.isAvailable
-            ) {
-                return true
-            }
-        }
-        return false
-    }
 }

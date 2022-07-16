@@ -32,7 +32,7 @@ class WelcomeAuthActivity : AppCompatActivity() {
     private lateinit var onBoardingItemAdapter: OnBoardingItemAdapter
     lateinit var llItemStateContainer: LinearLayout
     lateinit var rlProgressBar: RelativeLayout
-    lateinit var progressBar: ProgressBar
+
     lateinit var linearLayout3: LinearLayout
     lateinit var countryCode: String
     lateinit var phoneNumber: String
@@ -45,7 +45,7 @@ class WelcomeAuthActivity : AppCompatActivity() {
         btnContinue = findViewById(R.id.btnContinue)
         etMoNo = findViewById(R.id.etMoNo)
         rlProgressBar = findViewById(R.id.rlProgressBar)
-        progressBar = findViewById(R.id.progressBar)
+
         linearLayout3 = findViewById(R.id.linearLayout3)
 
         setOnBoardingItems()

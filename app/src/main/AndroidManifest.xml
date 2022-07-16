@@ -8,11 +8,19 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_logo"
+        android:icon="@mipmap/ic_logo_ph"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/ic_logo"
+        android:roundIcon="@mipmap/ic_logo_ph_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FinalYearProject">
+        <activity
+            android:name=".AboutUsInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AboutUsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_about_us"
+            android:theme="@style/Theme.FinalYearProject.NoActionBar" />
         <activity
             android:name=".activity.ConfirmedDateInfoActivity"
             android:exported="false" />
@@ -76,6 +84,13 @@
         <activity
             android:name=".activity.MainActivity"
             android:exported="false" />
+
+        <meta-data
+            android:name="com.razorpay.ApiKey"
+            android:value="rzp_test_z3pZnyJDxzhmlF" />
+        <meta-data
+            android:name="com.google.gms.wallet.api.enabled"
+            android:value="true" />
     </application>
 
 </manifest>

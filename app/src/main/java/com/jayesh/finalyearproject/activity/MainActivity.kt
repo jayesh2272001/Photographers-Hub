@@ -1,6 +1,8 @@
 package com.jayesh.finalyearproject.activity
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -10,9 +12,11 @@ import android.widget.FrameLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.capitalize
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.GravityCompat
@@ -26,9 +30,7 @@ import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
 import com.jayesh.finalyearproject.R
 import com.jayesh.finalyearproject.data.User
-import com.jayesh.finalyearproject.fragment.BookmarkFragment
-import com.jayesh.finalyearproject.fragment.HomeFragment
-import com.jayesh.finalyearproject.fragment.SettingFragment
+import com.jayesh.finalyearproject.fragment.*
 import de.hdodenhof.circleimageview.CircleImageView
 
 
@@ -50,6 +52,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
 
 
+    @SuppressLint("ResourceAsColor")
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -76,6 +80,8 @@ class MainActivity : AppCompatActivity() {
 
 
         setUpToolBar(tbMain)
+
+
         val actionBarDrawerToggle = ActionBarDrawerToggle(
             this,
             drawerLayout,
@@ -84,6 +90,7 @@ class MainActivity : AppCompatActivity() {
         )
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
+        actionBarDrawerToggle.drawerArrowDrawable.color = getColor(R.color.white)
 
         //setting on click listener on items in navigation drawer
         navMain.setNavigationItemSelectedListener {
@@ -98,6 +105,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.itmHome -> {
                     defaultFragment()
                     drawerLayout.closeDrawers()
+                    supportActionBar?.title = "Home"
                 }
 
                 R.id.itmBookmark -> {
@@ -105,6 +113,28 @@ class MainActivity : AppCompatActivity() {
                         R.id.frameLayout, BookmarkFragment()
                     ).commit()
                     drawerLayout.closeDrawers()
+                    supportActionBar?.title = "Favourites"
+                }
+                R.id.itmMyHires -> {
+                    supportFragmentManager.beginTransaction().replace(
+                        R.id.frameLayout, MyHiresFragment()
+                    ).commit()
+                    drawerLayout.closeDrawers()
+                    supportActionBar?.title = "My hires"
+                }
+                R.id.itmBookedDates -> {
+                    supportFragmentManager.beginTransaction().replace(
+                        R.id.frameLayout, BookedDatesFragment()
+                    ).commit()
+                    drawerLayout.closeDrawers()
+                    supportActionBar?.title = "My booked dates"
+                }
+                R.id.itmFaq -> {
+                    supportFragmentManager.beginTransaction().replace(
+                        R.id.frameLayout, FAQFragment()
+                    ).commit()
+                    drawerLayout.closeDrawers()
+                    supportActionBar?.title = "Frequently asked questions"
                 }
 
                 R.id.itmSettings -> {
@@ -112,24 +142,9 @@ class MainActivity : AppCompatActivity() {
                         R.id.frameLayout, SettingFragment()
                     ).commit()
                     drawerLayout.closeDrawers()
+                    supportActionBar?.title = " "
                 }
 
-                R.id.itmLogout -> {
-                    drawerLayout.closeDrawers()
-                    val alertDialog = AlertDialog.Builder(this)
-                    alertDialog.setMessage("Do you want to log out?")
-                    alertDialog.setPositiveButton("Yes") { _, _ ->
-                        Firebase.auth.signOut()
-                        val intent = Intent(this, WelcomeAuthActivity::class.java)
-                        startActivity(intent)
-                        finish()
-                    }
-                    alertDialog.setNegativeButton("No") { _, _ ->
-
-                    }
-                    alertDialog.create()
-                    alertDialog.show()
-                }
             }
 
             return@setNavigationItemSelectedListener true
@@ -171,7 +186,6 @@ class MainActivity : AppCompatActivity() {
                 override fun onCancelled(error: DatabaseError) {
                     Log.i("Snapshot error ", error.toString())
                 }
-
             }
             )
     }
@@ -181,6 +195,7 @@ class MainActivity : AppCompatActivity() {
             R.id.frameLayout, HomeFragment()
         ).commit()
         navMain.setCheckedItem(R.id.itmHome)
+        supportActionBar?.title = "Home"
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -200,7 +215,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
+    @RequiresApi(Build.VERSION_CODES.M)
     private fun setUpToolBar(toolbar: androidx.appcompat.widget.Toolbar) {
+        toolbar.setTitleTextColor(getColor(R.color.white))
         setSupportActionBar(toolbar)
 //        supportActionBar?.title = "Home"
         supportActionBar?.title = " "

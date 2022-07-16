@@ -14,10 +14,7 @@ import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.jayesh.finalyearproject.R
-import com.jayesh.finalyearproject.activity.GetPaymentDetails
-import com.jayesh.finalyearproject.activity.GetRecentWorkActivity
-import com.jayesh.finalyearproject.activity.MainActivity
-import com.jayesh.finalyearproject.activity.WelcomeAuthActivity
+import com.jayesh.finalyearproject.activity.*
 import com.jayesh.finalyearproject.data.SavedData
 
 
@@ -31,7 +28,7 @@ class SettingFragment : Fragment() {
     private lateinit var cvHelp: CardView
     private lateinit var cvShare: CardView
     private lateinit var cvRateUs: CardView
-
+private lateinit var cvDummy:CardView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,6 +44,7 @@ class SettingFragment : Fragment() {
         cvTerms = view.findViewById(R.id.cvTerms)
         cvAboutUs = view.findViewById(R.id.cvAboutUs)
         cvHelp = view.findViewById(R.id.cvHelp)
+        cvDummy = view.findViewById(R.id.cvDummy)
         cvShare = view.findViewById(R.id.cvShare)
         cvRateUs = view.findViewById(R.id.cvRateUs)
 
@@ -55,8 +53,16 @@ class SettingFragment : Fragment() {
             startActivity(intent)
         }
 
-        tvMultipleImages.setOnClickListener {
+        cvDummy.setOnClickListener {
             startActivity(Intent(activity, GetRecentWorkActivity::class.java))
+        }
+
+        cvTerms.setOnClickListener {
+            startActivity(Intent(activity, TermsAndConditionsActivity::class.java))
+        }
+
+        cvAboutUs.setOnClickListener {
+            startActivity(Intent(activity, AboutUsInfoActivity::class.java))
         }
 
 
